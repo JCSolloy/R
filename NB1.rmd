@@ -1,0 +1,130 @@
+Intro to basics
+
+ctrl + alt + i
+
+```{r}
+5 + 10
+5 - 3
+5 * 4
+
+# ctrl + enter -> se utiliza para ejecutar una lína o la selección de varias instrucciones
+# ctrl + shift + enter -> se utiliza para ejecutar todo el bloque de código
+
+```
+Variables
+
+```{r}
+my_var <- 17
+other_var = 20
+my_character <- "Hello world"
+my_logical <- TRUE
+my_numeric <- 5.2
+
+
+```
+
+Vectors
+
+```{r}
+numeric_vector <- c(1, 10, 5, 7, 10, -1, 5, 2, my_var)
+character_vector <- c("Edwin","Estuardo","x","y","z")
+boolean_vector <- c(TRUE, FALSE, FALSE, TRUE)
+
+numeric_vector <- c(1, 10, 5, 7, 10, -1, 5, 2, my_var, 1, 10, 5, 7, 10, -1, 5, 2, my_var,1, 10, 5, 7, 10, -1, 5, 2, my_var)
+character_vector
+boolean_vector
+print(boolean_vector)
+```
+```{r}
+numeric_vector
+```
+Naming a vector
+
+```{r}
+some_vector <- c("John Doe", "poker player")
+
+names(some_vector) <- c("Name", "Profession")
+some_vector
+
+```
+```{r}
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+
+days_name <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+
+names(poker_vector) <- days_name
+poker_vector
+
+names(roulette_vector) <- days_name
+roulette_vector
+```
+Calculating
+
+```{r}
+A_vector <- c(1, 2, 3)
+B_vector <- c(4, 5, 6)
+
+total_vector <- A_vector + B_vector
+
+total_daily <- poker_vector + roulette_vector
+poker_vector
+roulette_vector
+total_daily
+
+names(poker_vector) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Saturday")
+
+poker_vector
+roulette_vector
+poker_vector + roulette_vector # el valor del nombrado se mantiene para el primer vector
+
+```
+Vector Selection
+
+```{r}
+poker_vector[1]
+roulette_vector[3]
+poker_vector[2:4] + roulette_vector[2:4]
+
+test_vector <- poker_vector[2:4]
+
+selection_vector <- poker_vector > 0
+poker_winning_vector <- poker_vector[selection_vector]
+poker_vector[!selection_vector] # este resultado devuelve todos aquellos que no cumplen con la condición
+
+!poker_vector > 0
+
+poker_vector[c(2,4)]
+poker_vector[c("Monday","Saturday")]
+
+
+```
+Matrices
+
+```{r}
+matrix(1:9, byrow = TRUE, nrow = 3)
+```
+```{r}
+new_hope <- c(460.998, 314.4)
+names(new_hope) <- c("x","y") # prueba para verificar el nombrado del vector y luego utilizarlo en la matriz. Se pudo comprobar que el nombrado se pierde al definir la matriz.
+empire_strikes <- c(290.475, 247.900)
+retur_jedi <- c(309.306, 165.8)
+
+box_office <- c(new_hope, empire_strikes, retur_jedi)
+
+star_wars_matrix <- matrix(box_office, byrow=TRUE, nrow=3)
+
+```
+Naming a matrix
+
+```{r}
+region <- c("US", "non-US")
+titles <- c("A new hope", "The empire strikes back", "Return of the jedi")
+
+colnames(star_wars_matrix) <- region
+rownames(star_wars_matrix) <- titles
+
+star_wars_matrix
+
+```
+

@@ -1,0 +1,66 @@
+---
+title: "Homework 1"
+name: Juan Carlos Solloy Xicón
+course: Fundamentos de programación y scripting
+---
+
+# Homework 1
+
+En un notebook de R desarrolle los siguientes pasos:
+
+● Construya una matriz de 5 x 5 con valores aleatorios decimales que vayan en un rango de 160 a 200. Esta matriz contendrá los pesos (en libras) de varias personas. Asigne un nombre descriptivo a esta matriz.
+
+```{r}
+a_v <- sample(1600:2000,5)/10
+b_v <- sample(1600:2000,5)/10
+c_v <- sample(1600:2000,5)/10
+d_v <- sample(1600:2000,5)/10
+e_v <- sample(1600:2000,5)/10
+aux <- c(a_v, b_v, c_v, d_v, e_v)
+
+matrix_peso = matrix(aux, byrow=TRUE, nrow=5 )
+matrix_peso
+```
+
+● Asigne los meses enero a mayo como nombre de cada columna.
+
+```{r}
+meses <- c("enero","febrero","marzo","abril","mayo")
+colnames(matrix_peso) <- meses
+matrix_peso
+```
+
+● Asigne 5 nombres de persona, que sean aleatorios y que se utilicen como nombre de cada fila.
+
+```{r}
+nombres <- c("Juan", "Diego", "Pablo", "Alan", "Luis")
+rownames(matrix_peso) <- nombres
+matrix_peso
+```
+
+● Construya un vector que contenga el peso promedio de cada persona durante los meses de enero a mayo. (Investigue una función similar a rowSums pero para promediar)
+
+● Utilice cbind para agregar la fila promedio.
+
+```{r}
+prom_persona <- rowMeans(matrix_peso, na.rm =FALSE, dims=1)
+matrix_peso_prom_persona <- cbind(matrix_peso, prom_persona)
+matrix_peso_prom_persona
+```
+
+● Construya un vector que contenga el peso promedio en cada mes para todas las personas. (Investigue una función similar a colSums pero para promediar)
+
+● Utilice rbind para agregar la columna promedio.
+
+```{r}
+prom_mes = colMeans(matrix_peso_prom_persona, na.rm = FALSE, dims=1)
+matrix_peso_prom_mes <- rbind(matrix_peso_prom_persona, prom_mes)
+matrix_peso_prom_total <- matrix_peso_prom_mes
+matrix_peso_prom_total
+```
+
+● Por último imprima la matriz resultante.
+
+```{r}
+matrix_peso_prom_total
+```

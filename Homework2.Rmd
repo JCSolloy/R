@@ -1,0 +1,189 @@
+---
+title: "Homewowork 2"
+name: Juan Carlos Solloy Xicón
+course: Fundamentos de programación y scripting
+---
+Parte I. En un Notebook de R investigue, desarrolle y coloque un ejemplo para cada uno de los siguientes temas:
+
+## ● Funciones en R
+Las funciones en R son bloques de código re utilizables que realizan una tarea especifica.
+
+## ○ Parámetros obligatorios
+Los parámetros obligatorios son aquellos que se requieren para que una función pueda ejecutarse correctamente, si no se proporcionan los parámetros obligatorios la función generara un error.
+Ejemplo:
+```{r}
+sumar <- function(x, y) { # se define utilizando la palabra function y dentro del paréntesis se ponen los parámetros obligatorios para ejecutar la función.
+  total <- x + y # después del paréntesis van las operaciones a ejecutar por la función.
+  return(total) # return devolverá la variable que queremos que nos devuelva la función.
+}
+#Ejemplo de uso
+sumar(3,9)
+```
+## ○ Parámetros con valor predeterminado
+Los parámetros con valor predeterminado son aquellos que asumen un valor especifico si no se proporcionan un valor explicito al llamar a la función, esto permite que la función pueda ser usada de manera más flexible y sin necesidad de especificar siempre todos los parámetros.
+```{r}
+sumar <- function(x=0, y=10) { # Para este caso los valores predeterminados son x=0 y y=10, al hacer esto al llamar a la función sin pasarle parámetros nos devolverá el mismo resultado.
+  total <- x + y 
+  return(total) # return devolverá la variable que queremos que nos devuelva la función.
+}
+#Ejemplo de uso
+sumar() # sin pasarle ningún parámetro toma los parámetros predeterminados (x = 0, y = 10)
+```
+## ○ Parámetros de lista
+Los parámetros de lista son una forma de pasar listas como argumentos a las funciones.
+```{r}
+
+promedio <- function(valores = list()) {
+  largo <- length(valores)
+  aux <- 0
+  for (i in 1:largo){
+    aux <- aux + valores[i]
+  }
+  prom <- aux/largo 
+  return(prom)
+}
+# Ejemplo de lista como parámetro de una función.
+lista <- c(10,50,50,30,20,40)
+promedio(lista)
+```
+## ○ Parámetros de paso de función
+En R los parámetros son tipicamente pasados por el valor, esto significa que cuando se pasa un parámetro a una función, una copia del valor es creado y se pasa como parámetro a la función, quedando el valor original inalterado.
+```{r}
+potencia <- function(x) {
+  pot <- x*x
+  return(pot)
+}
+# Ejemplo de uso
+numero <- 10
+potencia <- potencia(numero)
+print(c(potencia,"valor devuelto por la función potencia")) # El numero que devuelve la función es 10*10 = 100
+print(c(numero, "valor de la variable que se pasa a la función")) # El valor de la variable numero no se ve alterado al pasarlo por la función.
+```
+
+## ○ Función `return`
+La función `return` devuelve un valor que se ha procesado dentro de una función.
+```{r}
+
+pitagoras <- function(a=0,b=0){
+  c = sqrt(a^2 + b^2)
+  return(c) # return nos devuelve del valor operado dentro de la función.
+}
+pitagoras(2,4)
+```
+## ○ Variables locales y globales
+
+### Variables globales
+Son variables que se definen fuera de cualquier función y son accesibles desde cualquier lugar en un programa de R, tiene alcance en el entorno entero de R.
+
+Se declaran usando el operador `<<-` o asignando el valor fuera de cualquier de una función.
+
+### Variables locales
+Son variables definidas dentro de una función, estas variables solo son accesibles dentro de la función donde fueron definidas, su alcance esta limitado al cuerpo de la función se pueden declarar con el operador `=` o `<-`
+
+```{r}
+area_circ <- function(r=0){
+  area <- pi*r^2
+  return(area)
+}
+
+area_circ_0 <- function(r=0){
+  pi = 3.14 # Variable local que solo tiene alcance dentro de la función.
+  area <- pi*r^2
+  return(area)
+}
+
+var_glob <<- 10
+area_circ(var_glob) # Esta función utiliza la constante pi de R.
+area_circ_0(var_glob) # Esta función utiliza la variable pi local dentro de la función.
+```
+
+## ○ Funciones que devuelven varios valores
+Son funciones que devuelven varios valores que se procesan dentro de una función.
+```{r}
+potencias <- function(x){
+  cuadrado <- x^2
+  cubo <- x^3
+  return(c(cuadrado,cubo))
+}
+potencias <- potencias(2)
+potencias[1]
+potencias[2]
+
+```
+# Parte II. En el mismo Notebook desarrolle el siguiente ejercicio:
+
+## 1. Construya una matriz de 3x4 con un rango de 3-36, que tenga un ordenamiento por fila y que cada valor tenga un corrimiento de 3 (el primer valor sea 3, el segundo sea 6 y así sucesivamente). Por último guarde la matriz en una variable.
+```{r}
+v1 <- c(1:12)*3
+m1 <- matrix(v1,byrow=FALSE,nrow=3)
+m1
+```
+## 2. Construya una matriz de 4x2 con un rango de 4-32, que tenga un ordenamiento por columna y que cada valor tenga un corrimiento de 4 (el primer valor sea 4, el segundo sea 8 y así sucesivamente). Por último guarde la matriz en una variable.
+```{r}
+v2 <- c(1:8)*4
+m2 <- matrix(v2, byrow = TRUE, ncol = 2 )
+m2
+```
+## 3. Construya una función que reciba 3 parámetros: 2 matrices y un valor numérico por defecto que será igual a 5. 
+Por ejemplo: nombre_funcion(param_matriz_1, param_matriz_2, operador = 5) .
+La función deberá realizar las siguientes operaciones:
+
+### 3.2. Multiplicación de las matrices. La multiplicación se realizará multiplicando las filas de la matriz que se recibe como primer parámetro por las columnas de la matriz del segundo parámetro.
+
+Matrix Multiplication Rules:
+For two matrices A and B to be multipliable, the following conditions must be met:
+Dimension Compatibility: The number of columns in the first matrix (A) must be equal to the number of rows in the second matrix (B).
+
+Resultant Matrix Dimensions: The resulting product matrix will have dimensions (number of rows in A) x (number of columns in B).
+
+```{r}
+dim_m1 <- dim(m1)
+dim_row1 <- dim_m1[1]
+dim_col1 <- dim_m1[2]
+
+dim_m2 <- dim(m2)
+dim_row2 <- dim_m2[1]
+dim_col2 <- dim_m2[2]
+# El numero de columnas de m1 debe ser igual al numero de filas de m2
+#col_m1 == row_m2
+## Dimensiones del resultado, numero de filas de m1 y numero de columnas de m2
+#dim_row1 <- dim_m1[1]
+#dim_col2 <- dim_m2[2]
+m1
+m2
+multip <- function(m1 = matrix(), m2 = matrix(), operador = 5) {
+dim_m1 <- dim(m1)
+dim_row1 <- dim_m1[1]
+dim_col1 <- dim_m1[2]
+dim_m2 <- dim(m2)
+dim_row2 <- dim_m2[1]
+dim_col2 <- dim_m2[2]
+#col_m1 == row_m2
+  if (dim_col1 == dim_row2) {
+    i = 0
+    for i in 1:dim_col1
+      for j in 1:dim_row2
+        
+    print("ok")
+  } else {
+    print("Las dimensiones de las matrices no son las correctas para poder multiplicarlas")
+  }
+}
+
+m3 <- matrix(1:1,nrow=5)
+dim_m3 <- dim(m3)
+dim_row3 <- dim_m3[1]
+dim_col3 <- dim_m3[2]
+multip(m1,m3)
+```
+### 3.3. Eleve al cubo la matriz del segundo parámetro y luego multiplique el resultado con el valor numérico por defecto.
+
+### 3.4. Por último, retorne los resultados de las operaciones del punto 3.1 al 3.3.
+
+## 4. Llame la función con el nombre que le definió y envíe como primer parámetro la matriz de 3x4, como segundo parámetro la matriz de 4x2 y el último parámetro no será necesario enviarlo porque tiene un valor por defecto.
+
+Importante. R ya cuenta con funciones predeterminadas para realizar estas operaciones, pero para la tarea debe aplicar los conocimientos que ha adquirido, así que está prohibido el uso de las funciones predefinidas por R.
+Consideraciones
+
+● Cargar el .Rmd en el aula virtual.
+● Fecha límite de entrega: viernes 17-mayo a las 23:59

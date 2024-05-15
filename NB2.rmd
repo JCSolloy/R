@@ -1,0 +1,54 @@
+RowSums
+
+```{r}
+worldwide_vector <- rowSums(star_wars_matrix)
+star_wars_matrix_with_total_rows <- cbind(star_wars_matrix, worldwide_vector)
+
+total <- colSums(star_wars_matrix_with_total_rows)
+star_wars_matrix_with_total_cols <- rbind(star_wars_matrix_with_total_rows, total)
+
+```
+Selection of matrix
+
+```{r}
+star_wars_matrix_with_total_cols
+
+star_wars_matrix_with_total_cols[2,]
+star_wars_matrix_with_total_cols[,1]
+star_wars_matrix_with_total_cols[3,2]
+star_wars_matrix_with_total_cols[2:3,1:2]
+star_wars_matrix_with_total_cols[2:3,1]
+star_wars_matrix_with_total_cols[c(1,3),2]
+star_wars_matrix_with_total_cols[c(1,3),1:2]
+star_wars_matrix_with_total_cols[c(1,3),c("US", "non-US")]
+```
+Arithmetic with matrices
+
+```{r}
+star_wars_matrix_with_total_cols[2:3, 2] / 5
+us_revenue_mean <- star_wars_matrix_with_total_cols[1:3, 1]
+mean(us_revenue_mean)
+```
+Factors
+
+```{r}
+sex_vector <- c("Male", "Female", "Female", "Male", "Male")
+factor_sex_vector <- factor(sex_vector)
+
+temperature_vector <- c("High", "Low", "High", "Low", "Medium")
+factor_temperature <- factor(temperature_vector)
+
+factor_temperature[1] > factor_temperature[4]
+factor_temperature <- factor(temperature_vector, order=TRUE, levels=c("Low", "Medium", "High"))
+
+factor_temperature[1] > factor_temperature[4]
+```
+Factor levels
+
+```{r}
+survey_vector <- c("M", "F", "F", "M", "M")
+factor_survey_vector <- factor(survey_vector)
+
+levels(factor_survey_vector) <- c("Female", "Male")
+factor_survey_vector[1]
+```
