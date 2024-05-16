@@ -115,75 +115,119 @@ potencias[2]
 ## 1. Construya una matriz de 3x4 con un rango de 3-36, que tenga un ordenamiento por fila y que cada valor tenga un corrimiento de 3 (el primer valor sea 3, el segundo sea 6 y así sucesivamente). Por último guarde la matriz en una variable.
 ```{r}
 v1 <- c(1:12)*3
-m1 <- matrix(v1,byrow=FALSE,nrow=3)
+m1 <- matrix(v1,byrow=TRUE,nrow=3)
 m1
 ```
 ## 2. Construya una matriz de 4x2 con un rango de 4-32, que tenga un ordenamiento por columna y que cada valor tenga un corrimiento de 4 (el primer valor sea 4, el segundo sea 8 y así sucesivamente). Por último guarde la matriz en una variable.
 ```{r}
 v2 <- c(1:8)*4
-m2 <- matrix(v2, byrow = TRUE, ncol = 2 )
+m2 <- matrix(v2, byrow = FALSE, ncol = 2 )
 m2
 ```
 ## 3. Construya una función que reciba 3 parámetros: 2 matrices y un valor numérico por defecto que será igual a 5. 
-Por ejemplo: nombre_funcion(param_matriz_1, param_matriz_2, operador = 5) .
+Por ejemplo: nombre_función(param_matriz_1, param_matriz_2, operador = 5) .
 La función deberá realizar las siguientes operaciones:
 
-### 3.2. Multiplicación de las matrices. La multiplicación se realizará multiplicando las filas de la matriz que se recibe como primer parámetro por las columnas de la matriz del segundo parámetro.
-
-Matrix Multiplication Rules:
-For two matrices A and B to be multipliable, the following conditions must be met:
-Dimension Compatibility: The number of columns in the first matrix (A) must be equal to the number of rows in the second matrix (B).
-
-Resultant Matrix Dimensions: The resulting product matrix will have dimensions (number of rows in A) x (number of columns in B).
+### 3.1 Transpuesta de una matrix
+Tome la matriz que se recibe como primer parámetro y opere la transpuesta, esta se obtiene intercambiando filas por columnas. Utilice la selección para obtener elemento por elemento, luego construya una nueva matriz y re ubique los elementos para obtener la transpuesta.
 
 ```{r}
-dim_m1 <- dim(m1)
-dim_row1 <- dim_m1[1]
-dim_col1 <- dim_m1[2]
-
-dim_m2 <- dim(m2)
-dim_row2 <- dim_m2[1]
-dim_col2 <- dim_m2[2]
-# El numero de columnas de m1 debe ser igual al numero de filas de m2
-#col_m1 == row_m2
-## Dimensiones del resultado, numero de filas de m1 y numero de columnas de m2
-#dim_row1 <- dim_m1[1]
-#dim_col2 <- dim_m2[2]
-m1
-m2
-multip <- function(m1 = matrix(), m2 = matrix(), operador = 5) {
-dim_m1 <- dim(m1)
-dim_row1 <- dim_m1[1]
-dim_col1 <- dim_m1[2]
-dim_m2 <- dim(m2)
-dim_row2 <- dim_m2[1]
-dim_col2 <- dim_m2[2]
-#col_m1 == row_m2
-  if (dim_col1 == dim_row2) {
-    i = 0
-    for i in 1:dim_col1
-      for j in 1:dim_row2
-        
-    print("ok")
-  } else {
-    print("Las dimensiones de las matrices no son las correctas para poder multiplicarlas")
+transpuesta <- function(m1=matrix(0)){
+# Dimensión de la matriz
+n_row1 <- nrow(m1)
+n_col1 <- ncol(m1)
+# Matriz transpuesta
+At <- matrix(0, nrow = n_col1, ncol = n_row1)
+# Creación de la matriz transpuesta utilizando for
+for (i in 1:n_col1) {
+  for (j in 1:n_row1) {
+    At[i, j] <- m1[j, i]
   }
 }
+return(At)
+}
+transpuesta(m1)
+```
+### 3.2. Multiplicación de las matrices
+La multiplicación se realizará multiplicando las filas de la matriz que se recibe como primer parámetro por las columnas de la matriz del segundo parámetro.
+Dadas dos matrices A y B, con dimensiones $A_{m \times n}$ y $B_{n \times p}$ la multiplicación de $AB$ es una matriz con $m$ filas y $p$ columnas cuya $(i,j)$-ésima entrada es $\sum _{k=1}^{n}a_{i,k}b_{k,j}$  
 
-m3 <- matrix(1:1,nrow=5)
-dim_m3 <- dim(m3)
-dim_row3 <- dim_m3[1]
-dim_col3 <- dim_m3[2]
-multip(m1,m3)
+```{r}
+
+multiplicacion <- function(m1=matrix(0), m2=matrix(0)){
+ dim_m1 <- dim(m1)
+dim_row1 <- dim_m1[1]
+dim_col1 <- dim_m1[2]
+dim_m2 <- dim(m2)
+dim_row2 <- dim_m2[1]
+dim_col2 <- dim_m2[2]
+resultado <- matrix(0, nrow = dim_row1, ncol = dim_col2)
+i <- 0
+j <- 0
+k <- 0
+if (dim_col1 == dim_row2){
+  for (i in 1:dim_row1) {
+  for (j in 1:dim_col2) {
+    for (k in 1:dim_col1) {
+      resultado[i, j] <- resultado[i, j] + (m1[i, k] * m2[k, j])
+    }
+  }
+  }
+}else{
+  print("Las matrices no tienen las dimensiones Amxn y Bnxp para poder multiplicarlas")
+}
+return(resultado)
+}
+
+# Prueba utilizando la operación brindada por R
+producto <- m1 %*% m2
+# Prueba con la función creada
+resultado <- multiplicacion(m1,m2)
+print(producto)
+print(resultado)
+
+# Prueba con matrices que no cumplen con las dimensiones para poder multiplicarse
+m3 <- matrix(1:9, nrow = 3, ncol=3, byrow = TRUE)
+resultado2 <- multiplicacion(m1,m3)
+print(resultado2)
 ```
 ### 3.3. Eleve al cubo la matriz del segundo parámetro y luego multiplique el resultado con el valor numérico por defecto.
+```{r}
+# Funcion para elevar al cubo la matriz
+cubo_matrix <-function(m1=matrix(0)){
+  cubo <- m1^3
+  return(cubo)
+}
+
+cubo_5 <- function(m1=matrix(0), m2=matrix(0), operador=5){
+# Elevar al cubo la matriz y multiplicarlo por el valor numérico por defecto
+cubo <- cubo_matrix(m2)*operador
+return(cubo)
+}
+producto <- cubo_5(m1,m2)
+producto
+```
 
 ### 3.4. Por último, retorne los resultados de las operaciones del punto 3.1 al 3.3.
+```{r}
+funcion_3_4 <- function(m1=matrix(0), m2=matrix(0), operador=5){
+
+tm1 <- transpuesta(m1)
+m1xm2 <- multiplicacion(m1,m2)
+cubo_m2 <- cubo_matrix(m2)*5
+
+resultados <- list(tm1, m1xm2,cubo_m2)
+names(resultados) <- c("Transpuesta", "Multiplicacion de matrices", "Resultado de elevar al cubo y multiplicar por el valor por defecto")
+return(resultados)
+}
+resultado3_4 <- funcion_3_4(m1,m2)
+resultado3_4
+```
 
 ## 4. Llame la función con el nombre que le definió y envíe como primer parámetro la matriz de 3x4, como segundo parámetro la matriz de 4x2 y el último parámetro no será necesario enviarlo porque tiene un valor por defecto.
-
-Importante. R ya cuenta con funciones predeterminadas para realizar estas operaciones, pero para la tarea debe aplicar los conocimientos que ha adquirido, así que está prohibido el uso de las funciones predefinidas por R.
-Consideraciones
-
+```{r}
+resultado4 <- funcion_3_4(m1,m2)
+resultado4
+```
 ● Cargar el .Rmd en el aula virtual.
 ● Fecha límite de entrega: viernes 17-mayo a las 23:59
