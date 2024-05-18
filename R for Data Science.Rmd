@@ -2,3 +2,38 @@
 title: "R for Data Science"
 ---
 
+# ggplot2
+
+First steps
+
+Los carros con motores grandes usan mas combustible que los pequeños.
+
+```{r}
+ggplot2::mpg
+mpg
+
+```
+
+## Creating a ggplot
+
+```{r}
+ggplot(data=mpg) + geom_point(mapping = aes(x = displ, y =hwy))
+```
+La funcion ggplot() crea un sistema de coordenadas a la cual se pueden agregar capas.
+El primer parametro de ggplot() es el conjunto de datos a usar en la grafica, esto crea una grafica vacia.
+
+Se completa la grafica agregando uno o mas capas a ggplot(), la funcion geom_point() agrega una capa de puntos a la grafica, que crea una grafica de dispersion.
+
+ggplot2 viene con muchas funciones y cada una agrega diferentes capas a una grafica. Cada funcion geom en ggplot2 toma un argumento de mapeo, el argumento de mapeo
+define como se asignan las variables de su conjunto de datos a las propiedades visuales.
+El parametro de mapeo es siempre conectado con `aes()`, y la x y y argumentos de `aes()` especifican que variables a mapear para los ejes x y y. 
+
+## Una plantilla grafica
+Se puede convertir este codigo para reusarlo como plantilla para hacer graficas con ggplot2. 
+
+Para hacer una grafica, reemplace las secciones entre corchetes en el siguiente codigo con un conjunto de datos, una funcion geom o una coleccion de asignaciones:
+
+```{r}
+ggplot(data = <DATA>) +
+    <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```

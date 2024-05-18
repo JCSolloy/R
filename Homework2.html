@@ -527,14 +527,33 @@ valor numérico por defecto que será igual a 5.</h2>
 transpuesta, esta se obtiene intercambiando filas por columnas. Utilice
 la selección para obtener elemento por elemento, luego construya una
 nueva matriz y re ubique los elementos para obtener la transpuesta.</p>
+<pre class="r"><code>transpuesta &lt;- function(m1=matrix(0)){
+# Dimensión de la matriz
+n_row1 &lt;- nrow(m1)
+n_col1 &lt;- ncol(m1)
+# Matriz transpuesta
+At &lt;- matrix(0, nrow = n_col1, ncol = n_row1)
+# Creación de la matriz transpuesta utilizando for
+for (i in 1:n_col1) {
+  for (j in 1:n_row1) {
+    At[i, j] &lt;- m1[j, i]
+  }
+}
+return(At)
+}
+transpuesta(m1)</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    3   15   27
+## [2,]    6   18   30
+## [3,]    9   21   33
+## [4,]   12   24   36</code></pre>
 </div>
 <div id="multiplicación-de-las-matrices" class="section level3">
 <h3>3.2. Multiplicación de las matrices</h3>
 <p>La multiplicación se realizará multiplicando las filas de la matriz
 que se recibe como primer parámetro por las columnas de la matriz del
-segundo parámetro.</p>
-<p>Dadas dos matrices A y B, con dimensiones <span class="math inline">\(A_{m \times n}\)</span> y <span class="math inline">\(B_{n \times p}\)</span> la multiplicación de <span class="math inline">\(AB\)</span> es una matriz con <span class="math inline">\(m\)</span> filas y <span class="math inline">\(p\)</span> columnas cuya <span class="math inline">\((i,j)\)</span>-ésima entrada es <span class="math inline">\(\sum _{k=1}^{n}a_{i,k}b_{k,j}\)</span></p>
-<pre class="r"><code>multiplicacion &lt;- function(m1=matrix(0), m2=matrix(0), operador=5){
+segundo parámetro. Dadas dos matrices A y B, con dimensiones <span class="math inline">\(A_{m \times n}\)</span> y <span class="math inline">\(B_{n \times p}\)</span> la multiplicación de <span class="math inline">\(AB\)</span> es una matriz con <span class="math inline">\(m\)</span> filas y <span class="math inline">\(p\)</span> columnas cuya <span class="math inline">\((i,j)\)</span>-ésima entrada es <span class="math inline">\(\sum _{k=1}^{n}a_{i,k}b_{k,j}\)</span></p>
+<pre class="r"><code>multiplicacion &lt;- function(m1=matrix(0), m2=matrix(0)){
  dim_m1 &lt;- dim(m1)
 dim_row1 &lt;- dim_m1[1]
 dim_col1 &lt;- dim_m1[2]
@@ -586,57 +605,59 @@ resultado2 &lt;- multiplicacion(m1,m3)</code></pre>
 <div id="eleve-al-cubo-la-matriz-del-segundo-parámetro-y-luego-multiplique-el-resultado-con-el-valor-numérico-por-defecto." class="section level3">
 <h3>3.3. Eleve al cubo la matriz del segundo parámetro y luego
 multiplique el resultado con el valor numérico por defecto.</h3>
-<pre class="r"><code>multiplicacion &lt;- function(m1=matrix(0), m2=matrix(0), operador=5){
- dim_m1 &lt;- dim(m1)
-dim_row1 &lt;- dim_m1[1]
-dim_col1 &lt;- dim_m1[2]
-dim_m2 &lt;- dim(m2)
-dim_row2 &lt;- dim_m2[1]
-dim_col2 &lt;- dim_m2[2]
-resultado &lt;- matrix(0, nrow = dim_row1, ncol = dim_col2)
-i &lt;- 0
-j &lt;- 0
-k &lt;- 0
-if (dim_col1 == dim_row2){
-  for (i in 1:dim_row1) {
-  for (j in 1:dim_col2) {
-    for (k in 1:dim_col1) {
-      resultado[i, j] &lt;- resultado[i, j] + (m1[i, k] * m2[k, j])
-    }
-  }
-  }
-}else{
-  print(&quot;Las matrices no tienen las dimensiones Amxn y Bnxp para poder multiplicarlas&quot;)
+<pre class="r"><code># Funcion para elevar al cubo la matriz
+cubo_matrix &lt;-function(m1=matrix(0)){
+  cubo &lt;- m1^3
+  return(cubo)
 }
 
-m2_cubo = m2^3*operador
-lista =c(resultado, m2_cubo)
-return(lista)
+cubo_5 &lt;- function(m1=matrix(0), m2=matrix(0), operador=5){
+# Elevar al cubo la matriz y multiplicarlo por el valor numérico por defecto
+cubo &lt;- cubo_matrix(m2)*operador
+return(cubo)
 }
-
-# Prueba utilizando la operación brindada por R
-producto &lt;- m1 %*% m2
-# Prueba con la función creada
-resultado &lt;- multiplicacion(m1,m2)
-print(producto)</code></pre>
-<pre><code>##      [,1] [,2]
-## [1,]  360  840
-## [2,]  840 2088
-## [3,] 1320 3336</code></pre>
-<pre class="r"><code>print(resultado)</code></pre>
-<pre><code>##  [1]    360    840   1320    840   2088   3336    320   2560   8640  20480
-## [11]  40000  69120 109760 163840</code></pre>
-<pre class="r"><code># Prueba con matrices que no cumplen con las dimensiones para poder multiplicarse
-m3 &lt;- matrix(1:9, nrow = 3, ncol=3, byrow = TRUE)
-resultado2 &lt;- multiplicacion(m1,m3)</code></pre>
-<pre><code>## [1] &quot;Las matrices no tienen las dimensiones Amxn y Bnxp para poder multiplicarlas&quot;</code></pre>
-<pre class="r"><code>print(resultado2)</code></pre>
-<pre><code>##  [1]    0    0    0    0    0    0    0    0    0    5  320 1715   40  625 2560
-## [16]  135 1080 3645</code></pre>
+producto &lt;- cubo_5(m1,m2)
+producto</code></pre>
+<pre><code>##       [,1]   [,2]
+## [1,]   320  40000
+## [2,]  2560  69120
+## [3,]  8640 109760
+## [4,] 20480 163840</code></pre>
 </div>
 <div id="por-último-retorne-los-resultados-de-las-operaciones-del-punto-3.1-al-3.3." class="section level3">
 <h3>3.4. Por último, retorne los resultados de las operaciones del punto
 3.1 al 3.3.</h3>
+<pre class="r"><code>funcion_3_4 &lt;- function(m1=matrix(0), m2=matrix(0), operador=5){
+
+tm1 &lt;- transpuesta(m1)
+m1xm2 &lt;- multiplicacion(m1,m2)
+cubo_m2 &lt;- cubo_matrix(m2)*5
+
+resultados &lt;- list(tm1, m1xm2,cubo_m2)
+names(resultados) &lt;- c(&quot;Transpuesta&quot;, &quot;Multiplicacion de matrices&quot;, &quot;Resultado de elevar al cubo y multiplicar por el valor por defecto&quot;)
+return(resultados)
+}
+resultado3_4 &lt;- funcion_3_4(m1,m2)
+resultado3_4</code></pre>
+<pre><code>## $Transpuesta
+##      [,1] [,2] [,3]
+## [1,]    3   15   27
+## [2,]    6   18   30
+## [3,]    9   21   33
+## [4,]   12   24   36
+## 
+## $`Multiplicacion de matrices`
+##      [,1] [,2]
+## [1,]  360  840
+## [2,]  840 2088
+## [3,] 1320 3336
+## 
+## $`Resultado de elevar al cubo y multiplicar por el valor por defecto`
+##       [,1]   [,2]
+## [1,]   320  40000
+## [2,]  2560  69120
+## [3,]  8640 109760
+## [4,] 20480 163840</code></pre>
 </div>
 </div>
 <div id="llame-la-función-con-el-nombre-que-le-definió-y-envíe-como-primer-parámetro-la-matriz-de-3x4-como-segundo-parámetro-la-matriz-de-4x2-y-el-último-parámetro-no-será-necesario-enviarlo-porque-tiene-un-valor-por-defecto." class="section level2">
@@ -644,10 +665,27 @@ resultado2 &lt;- multiplicacion(m1,m3)</code></pre>
 parámetro la matriz de 3x4, como segundo parámetro la matriz de 4x2 y el
 último parámetro no será necesario enviarlo porque tiene un valor por
 defecto.</h2>
-<p>Importante. R ya cuenta con funciones predeterminadas para realizar
-estas operaciones, pero para la tarea debe aplicar los conocimientos que
-ha adquirido, así que está prohibido el uso de las funciones
-predefinidas por R. Consideraciones</p>
+<pre class="r"><code>resultado4 &lt;- funcion_3_4(m1,m2)
+resultado4</code></pre>
+<pre><code>## $Transpuesta
+##      [,1] [,2] [,3]
+## [1,]    3   15   27
+## [2,]    6   18   30
+## [3,]    9   21   33
+## [4,]   12   24   36
+## 
+## $`Multiplicacion de matrices`
+##      [,1] [,2]
+## [1,]  360  840
+## [2,]  840 2088
+## [3,] 1320 3336
+## 
+## $`Resultado de elevar al cubo y multiplicar por el valor por defecto`
+##       [,1]   [,2]
+## [1,]   320  40000
+## [2,]  2560  69120
+## [3,]  8640 109760
+## [4,] 20480 163840</code></pre>
 <p>● Cargar el .Rmd en el aula virtual. ● Fecha límite de entrega:
 viernes 17-mayo a las 23:59</p>
 </div>
