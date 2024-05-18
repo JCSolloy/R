@@ -1,0 +1,100 @@
+## If sentence
+
+```{r}
+number <- 4
+result <- ""
+
+if (number < 10) {
+  if (number < 5) {
+    result <- "extra small"
+  } else {
+    result <- "small"
+  }
+} else if(number < 100) {
+  result <- "Odd"
+} 
+
+```
+
+## Loops
+```{r}
+# While loop
+i <- 1
+while (i <= 5) {
+  print(i)
+  i <- i + 1
+}
+```
+```{r}
+speed <- 64
+while(speed > 30) {
+  print(paste("Your speed is", speed))
+  if (speed >= 58) {
+    print("Slow down big time")
+    speed <- speed - 11
+  } else {
+    print("Slow down")
+    speed <- speed - 6
+  } 
+}
+```
+stop the while loop: break
+```{r}
+speed <- 88
+while(speed < 30) {
+  print(paste("Your speed is", speed))
+  if (speed > 80) {
+    break
+    speed <- speed - 11
+  } else {
+    print("Slow down")
+    speed <- speed - 6
+  } 
+  if (speed < 40) {
+    break
+  }
+}
+```
+
+```{r}
+i <- 1
+while (i <= 10) {
+  print(3*i)
+  if (3*i == 20) {
+    break
+  }
+  i <- i + 1
+}
+```
+For loop 
+```{r}
+var <- c(10, 22, 3, 4, 5)
+for (i in 1:length(var)) {
+  print(var[i])
+}
+```
+
+```{r}
+var <- c(10, 22, 3, 4, 5)
+for (i in var) {
+  print(var[i])
+}
+```
+Loop over a list
+```{r}
+list <- list(109, 20, 3, 4, 5)
+for (i in list) {
+  print(i)
+}
+```
+Loop over a matrix
+```{r}
+matrix <- matrix(1:9, nrow = 3)
+for (i in 1:nrow(matrix)) {
+  for (j in 1:ncol(matrix)) {
+    print(matrix[i, j])
+  }
+}
+```
+
+

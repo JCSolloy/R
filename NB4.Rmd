@@ -1,0 +1,17 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# The apply family
+lapply
+
+Aplly a function to each element of a list and return a list
+
+```{r}
+lapply(1:10, function(x) x^2)
+
+lapply(1:10, function(x) x-2)
+lapply(1:10, function(x) {x-23})
+
+```
