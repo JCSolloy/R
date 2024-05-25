@@ -1,0 +1,158 @@
+RowSums
+
+```{r}
+worldwide_vector <- rowSums(star_wars_matrix)
+star_wars_matrix_with_total_rows <- cbind(star_wars_matrix, worldwide_vector)
+
+total <- colSums(star_wars_matrix_with_total_rows)
+star_wars_matrix_with_total_cols <- rbind(star_wars_matrix_with_total_rows, total)
+
+```
+Selection of matrix
+
+```{r}
+star_wars_matrix_with_total_cols
+
+star_wars_matrix_with_total_cols[2,]
+star_wars_matrix_with_total_cols[,1]
+star_wars_matrix_with_total_cols[3,2]
+star_wars_matrix_with_total_cols[2:3,1:2]
+star_wars_matrix_with_total_cols[2:3,1]
+star_wars_matrix_with_total_cols[c(1,3),2]
+star_wars_matrix_with_total_cols[c(1,3),1:2]
+star_wars_matrix_with_total_cols[c(1,3),c("US", "non-US")]
+```
+Arithmetic with matrices
+
+```{r}
+star_wars_matrix_with_total_cols[2:3, 2] / 5
+us_revenue_mean <- star_wars_matrix_with_total_cols[1:3, 1]
+mean(us_revenue_mean)
+```
+Factors
+
+```{r}
+sex_vector <- c("Male", "Female", "Female", "Male", "Male")
+factor_sex_vector <- factor(sex_vector)
+
+temperature_vector <- c("High", "Low", "High", "Low", "Medium")
+factor_temperature <- factor(temperature_vector)
+
+factor_temperature[1] > factor_temperature[4]
+factor_temperature <- factor(temperature_vector, order=TRUE, levels=c("Low", "Medium", "High"))
+
+factor_temperature[1] > factor_temperature[4]
+```
+Factor levels
+
+```{r}
+survey_vector <- c("M", "F", "F", "M", "M")
+factor_survey_vector <- factor(survey_vector)
+
+levels(factor_survey_vector) <- c("Female", "Male")
+factor_survey_vector[1]
+```
+
+Dataframes
+
+```{r}
+mtcars
+head(mtcars, 2)
+tail(mtcars, 3)
+str(mtcars)
+
+```
+Creating a dataframe
+
+```{r}
+name <- c("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune")
+type <- c("Terrestrial planet", "Terrestrial planet", "Terrestrial planet", 
+          "Terrestrial planet", "Gas giant", "Gas giant", "Gas giant", "Gas giant")
+diameter <- c(0.382, 0.949, 1, 0.532, 11.209, 9.449, 4.007, 3.883)
+rotation <- c(58.64, -243.02, 1, 1.03, 0.41, 0.43, -0.72, 0.67)
+rings <- c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
+
+planets_df <- data.frame(name, type, diameter, rotation, rings)
+str(planets_df)
+```
+Selecting of data frame
+
+```{r}
+planets_df[2, 3]
+planets_df[,3]
+planets_df[4,]
+planets_df[2:5,4]
+planets_df[2:5,"rotation"]
+planets_df$type
+planets_df$rings
+planets_df[rings,]
+planets_df[!rings,]
+
+subset(planets_df, subset = diameter < 1)
+subset(planets_df, subset = type == "Terrestrial planet")
+subset(planets_df, subset = diameter >= 1 & rings == FALSE)
+subset(planets_df, subset = diameter >= 1 | rings == FALSE)
+
+```
+
+Order
+
+```{r}
+a <- c(100,10,1000)
+order(a)
+vector_ordered <- a[order(a)]
+```
+```{r}
+position <- order(planets_df$diameter)
+planets_df[position, ]
+```
+
+Lists
+
+```{r}
+my_vector <- 1:10
+my_matrix <- matrix(1:9, ncol=3)
+my_df <- mtcars[1:10,]
+my_list <- list(my_vector, my_matrix, my_df)
+
+# Selecting elements of list
+my_list[[1]]
+# Selecting elements of vector
+my_list[[1]][3]
+
+# Selecting elements of matrix
+my_list[[2]]
+# Selecting elements of matrix
+my_list[[2]][2,2]
+my_list[[2]][2,]
+
+# Selecting elements of matrix
+my_list[[3]]
+# Selecting elements of matrix
+my_list[[3]][,"cyl"]
+```
+Naming a list
+
+```{r}
+names(my_list) <- c("vec","mat","df")
+my_list
+my_list[[3]]
+my_list$df[,2]
+```
+```{r}
+mov <- "The Shining"
+act <- c("Jack Nicholson", "Shelley Duvall", "Danny Lloyd", "Scatman Crothers", "Barry Nelson")
+
+scores <- c(4.5, 4, 5)
+sources <- c("IMDb1", "IMDb2", "IMDb3")
+comments <- c("Best Horror Film", "A truly brilliant and scary film", "A masterpiece of psychological horror")
+rev <- data.frame(scores, sources, comments)
+
+shining_list <- list(moviename = mov, actors = act, reviews = rev)
+shining_list[[2]]
+shining_list$actors[2]
+scores_vector <- shining_list[[3]][,"scores"]
+mean(scores_vector)
+sum(scores_vector)
+```
+

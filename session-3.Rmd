@@ -1,0 +1,246 @@
+Conditionals
+
+Equality
+
+```{r}
+TRUE == FALSE
+-6 * 14 != 17 - 101
+"user" == "useR"
+TRUE == 1
+
+```
+Greater than and less than
+
+```{r}
+-6 * 5 + 2 >= -10 + 1
+"raining" <= "raining dogs"
+"dog" > "cats"
+TRUE > FALSE
+
+```
+Compare vectors
+
+```{r}
+linkedin <- c(16, 9 , 13, 5, 2, 17, 14)
+facebook <- c(17, 7, 5, 16, 8, 13, 14)
+
+linkedin > 15
+linkedin > facebook
+```
+Compare matrices
+
+```{r}
+views <- matrix(c(linkedin, facebook), nrow=2, byrow=TRUE)
+views
+views > 13
+```
+Logical operators
+
+```{r}
+last <- tail(linkedin,1)
+
+last > 5 | last < 10
+last > 15 & last <= 20
+last >= 14 & last <= 20
+```
+If Sentence
+
+```{r}
+medium <- "LinkedIn"
+num_views <- 14
+
+if(medium == "LinkedIn"){
+  print("Showing LinkedIn information")
+}
+
+if(num_views > 15){
+  print("You are popular!")
+}
+
+```
+Add an else
+
+```{r}
+if(medium == "LinkedIn"){
+  print("Showing LinkedIn information")
+} else {
+  print("Unknown medium")
+}
+
+if(num_views > 15){
+  print("You are popular!")
+} else {
+  print("Try to be more visible!")
+}
+```
+Futher if
+
+```{r}
+medium <- "Facebook"
+
+if(medium == "LinkedIn"){
+  print("Showing LinkedIn information")
+} else if (medium == "Facebook"){
+  print("Showing Facebook information")
+} else {
+  print("Unknown medium")
+}
+
+if(num_views > 15){
+  print("You are popular!")
+} else if(num_views <= 15 & num_views > 10){
+  print("Your number of views is average")
+} else {
+  print("Try to be more visible!")
+}
+
+```
+If 2.0
+
+```{r}
+number <- 150
+result <- ""
+
+if(number < 10){
+  if(number < 5){
+    result <- "extra small"
+  } else {
+    result <- "small"
+  }
+} else if(number < 100){
+  result <- "medium"
+} else {
+  result <- "large"
+}
+
+print(result)
+
+if(number < 10 & number < 5){
+  result <- "extra small"
+} else{
+  result <- "small"
+}
+
+```
+While Loop
+
+```{r}
+speed <- 64
+
+while(speed > 30){
+  print("Slow down!")
+  speed <- speed - 7
+}
+print(speed)
+
+```
+```{r}
+speed <- 64
+
+while(speed > 30){
+  print(paste("Your speed is",speed))
+  if(speed >= 48){
+    print("Slow down big time!")
+    speed <- speed - 11
+  } else {
+    print("Slow down!")
+    speed <- speed - 6
+  }
+}
+```
+Stop the while loop: break
+
+```{r}
+speed <- 64
+
+while(speed > 30){
+  print(paste("Your speed is",speed))
+  
+  if(speed == 42){
+    break
+  }
+  
+  if(speed >= 48){
+    print("Slow down big time!")
+    speed <- speed - 11
+  } else {
+    print("Slow down!")
+    speed <- speed - 6
+  }
+  
+}
+```
+```{r}
+i <- 1
+
+while(i <= 10){
+  print(3*i)
+  if(i*5 == 20){
+    break
+  }
+  i <- i + 1
+  #i++
+}
+```
+For Loop
+
+```{r}
+linkedin <- c(16, 9 , 13, 5, 2, 17, 14)
+
+for(l in linkedin){
+  print(l)
+}
+
+for(i in 1:7){
+  print(linkedin[i])
+}
+
+for(i in 1:length(linkedin)){
+  print(linkedin[i])
+}
+
+```
+Loop over a list
+
+```{r}
+nyc <- list(pop = 8405837, boroughs = c("Manhattan","Bronx","Brooklyn","Queens","Staten Island"), capital=FALSE)
+
+nyc
+
+for(n in nyc){
+  print(n)
+}
+
+for(i in 1:length(nyc)){
+  print(nyc[[i]])
+}
+
+
+```
+Loop over a matrix
+
+```{r}
+my_matrix <- matrix(1:9, nrow=3)
+
+for(i in 1:nrow(my_matrix)){
+  for(j in 1:ncol(my_matrix)){
+    print(paste("On row", i, "and column", j, "the board contains",my_matrix[i,j]))
+  }
+}
+
+```
+Mix it up with control flow
+
+```{r}
+linkedin
+
+for (li in linkedin){
+  if(li > 10){
+    print("You're popular!")
+  } else {
+    print("Be more visible!")
+  }
+  print(li)
+}
+```
+

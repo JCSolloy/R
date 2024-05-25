@@ -1,0 +1,166 @@
+---
+title: "Lab work 1"
+name: "Juan Carlos Solloy Xicón"
+DPI: "2117258380304"
+course: "Fundamentos de programación y scripting"
+date: "2021-09-25"
+---
+
+# Laboratorio 1
+
+El siguiente laboratorio va en la búsqueda de evaluar los conocimientos adquiridos en la parte introductoria e intermedia de R. A continuación se describen los pasos que deberá seguir para completarlo.
+
+Se cuentan con registros de las notas de 10 estudiantes:
+
+## 1 Vectores y matrices
+
+1.1. Cree un vector por cada estudiante en donde almacene los 5 registros, luego asigne el vector a una variable. Al finalizar deberá contar con 10 vectores. Un ejemplo de vector es el siguiente:
+
+```{r}
+E1 <- c(85.4, 54.2, 35.2, 100, TRUE)
+E2 <- c(62.5, 62.7, 56.8, 65.7, FALSE)
+E3 <- c(60.7, 75.8, 59.7, 87.5, TRUE)
+E4 <- c(45.8, 45.7, 37.4, 57.8, FALSE)
+E5 <- c(100, 63.4, 25.1, 39.4, FALSE)
+E6 <- c(77.9, 78.9, 89.9, 57.1, FALSE)
+E7 <- c(27.9, 65.1, 74.4, 89.4, TRUE)
+E8 <- c(37.6, 67.7, 22.1, 100, FALSE)
+E9 <- c(61.8, 98.9, 45.6, 96.7, TRUE)
+E10 <- c(77.9, 74.5, 41.7, 87.1, TRUE)
+```
+
+1.2. Construya un vector más. Los elementos de este vector serán cada uno de los vectores creados anteriormente, por ejemplo:
+```{r}
+total_E <- c(E1, E2, E3, E4, E5, E6, E7, E8, E9, E10)
+total_E
+```
+
+1.3. Construya una matriz que reciba como parámetro el vector creado en el inciso 1.2. Luego imprima la matriz.
+
+```{r}
+
+matrix_E <- matrix(total_E, nrow = 10, byrow = TRUE)
+matrix_E
+```
+## 2 Nombrado de una matriz
+
+2.1. Cree 2 vectores más, uno servirá para almacenar los nombres de los estudiantes, queda a su criterio elegir los nombres. El segundo vector servirá para el nombre de los cursos y para la columna que registra la mayoría de edad, para este segundo vector se deben utilizar los nombres que se le proporcionan.
+
+```{r}
+nombres <- c("Juan", "Pedro", "Maria", "Jose", "Luis", "Carlos", "Ana", "Sofia", "Rosa", "Luisa")
+cursos <- c("Robótica", "Lógica", "Filosofía", "Inglés", "Mayoria_edad")
+```
+
+2.2. Utilice los vectores del inciso anterior para crear el nombrado de filas y columnas de la matriz que construyó en el inciso 1.3. En las filas deben aparecer los estudiantes y en columnas los cursos y si es mayor de edad. Luego imprima la matriz.
+```{r}
+colnames(matrix_E) <- cursos
+rownames(matrix_E) <- nombres
+matrix_E
+```
+## 3 rowSums, cbind
+
+3.1. Construya un vector que contenga la sumatoria de todas las notas por cada estudiante, utilice la función rowSum para hacerlo, tome en cuenta que solo debe considerar las primera 4 columnas, porque la última corresponde a la mayoría de edad.
+```{r}
+suma_notas <- rowSums(matrix_E[,1:4])
+suma_notas
+```
+
+3.2. Pegue el vector que construyó en el inciso anterior con la matriz del inciso 1.3 por medio de la función cbind y asigne el resultado a una nueva variable. Por último, imprima la nueva matriz resultante.
+```{r}
+matriz_32 <- cbind(matrix_E, suma_notas)
+matriz_32
+```
+## 4 Seleccionando elementos de una matriz
+
+4.1. Del resultado obtenido en el inciso 3.2 seleccione la fila 3, 6, 8, 9 y las columnas 2, 3 y 4. Almacene el resultado en una nueva variable e imprima el resultado.
+```{r}
+matriz_seleccionada <- matriz_32[c(3, 6, 8, 9), c(2, 3, 4)]
+matriz_seleccionada
+```
+
+## 5 Dataframes
+
+5.1. Construya un data frame utilizando la matriz del inciso 3.2 como parámetro.
+```{r}
+data_frame <- as.data.frame(matriz_32)
+data_frame
+```
+
+5.2. Utilice la función subset en el nuevo data frame para filtrar por la siguiente condición:
+Que la columna Filosofía sea mayor a 55 y que Mayoria_edad sea verdadero.
+```{r}
+subset(data_frame, Filosofía > 55 & Mayoria_edad == TRUE)
+```
+
+## 6 Funciones, Condicionales y Bucles
+
+6.1. Construya una función que recorra la matriz del inciso 3.2.
+Tip 1: Puede utilizar el ciclo For para recorrer filas y columnas. Apóyese en las funciones nrow y ncol para el recorrido.
+Tip 2: Al recorrer la matriz debe tomar en cuenta las columnas que poseen notas (únicamente las primeras 4 columnas).
+```{r}
+recorrer_matriz0 <- function(matriz){
+  for(i in 1:nrow(matriz)){
+    for(j in 1:ncol(matriz)){
+      if(j <= 4){
+        print(matriz[i,j])
+      }
+    }
+  }
+}
+```
+
+6.2. Al recorrer filas y columnas obtendrá el valor de la nota que se encuentra en cada celda de la matriz, con este valor aplique las siguientes condiciones para imprimir un mensaje:
+6.2.1. Si la nota es menor o igual a 45 imprima "Estudiante en riesgo"
+6.2.2. Si la nota es mayor a 45 y menor a 61 imprima “Estudiante puede ser
+aprobado”
+6.2.3. Si la nota es mayor o igual a 61 imprima “Estudiante aprobado”
+```{r}
+recorrer_matriz <- function(matriz){
+  for(i in 1:nrow(matriz)){
+    for(j in 1:ncol(matriz)){
+      if(j <= 4){
+        if(matriz[i,j] <= 45){
+          print("Estudiante en riesgo")
+          print(paste(rownames(matriz)[i], colnames(matriz)[j], matriz[i,j]))
+        }else if(matriz[i,j] > 45 & matriz[i,j] < 61){
+          print("Estudiante puede ser aprobado")
+          print(paste(rownames(matriz)[i], colnames(matriz)[j], matriz[i,j]))
+        }else{
+          print("Estudiante aprobado")
+          print(paste(rownames(matriz)[i], colnames(matriz)[j], matriz[i,j]))
+        }
+      }
+    }
+  }
+}
+
+recorrer_matriz(matriz_32)
+```
+
+## 7 Funciones, condicionales y bucles - Parte II
+
+7.1. Construya la función index_education que reciba un parámetro de nombre grade. La función debe operar la siguiente fórmula:o
+
+index education = $\frac{1+(grade/100)}{2}$
+
+```{r}
+index_education <- function(grade){
+  result <- (1 + (grade/100))/2
+  return(result)
+}
+```
+7.2. Utilice el data frame construido en el inciso 5.1 seleccionando todas las filas y solamente las primeras 4 columnas, luego asigne el resultado en una nueva variable.
+```{r}
+data_frame_seleccionado <- data_frame[,1:4]
+data_frame_seleccionado
+```
+7.3. Use For para recorrer el resultado obtenido en el inciso anterior. Tome en cuenta que cada columna representa un curso (“Robótica”, “Lógica”, “Filosofía”, “Inglés”), así que cada vez que pase por uno, deberá imprimir el nombre y el índice de educación (llamando a la función index_education y enviado la nota como parámetro).
+Recomendación. Para este último inciso, primero recorra cada columna (curso) y luego recorra fila por fila, obteniendo así, el índice de educación de cada estudiante por un curso en particular.
+```{r}
+for(i in 1:ncol(data_frame_seleccionado)){
+  print(colnames(data_frame_seleccionado)[i])
+  for(j in 1:nrow(data_frame_seleccionado)){
+    print( paste("Index education",rownames(data_frame_seleccionado)[j],index_education(data_frame_seleccionado[j,i])))
+  }
+}
+```
