@@ -1758,45 +1758,31 @@ display: none;
 <p>Aplly a function to each element of a list and return a list</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGFwcGx5KDE6MTAsIGZ1bmN0aW9uKHgpIHt4LTIzfSlcblxuYGBgIn0= -->
-<pre class="r"><code>lapply(1:10, function(x) {x-23})
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGFwcGx5KDE6MTAsIGZ1bmN0aW9uKHgpIHheMilcblxubGFwcGx5KDE6MTAsIGZ1bmN0aW9uKHgpIHgtMilcbmxhcHBseSgxOjEwLCBmdW5jdGlvbih4KSB7eC0yM30pXG5cbmBgYCJ9 -->
+<pre class="r"><code>lapply(1:10, function(x) x^2)
+
+lapply(1:10, function(x) x-2)
+lapply(1:10, function(x) {x-23})
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSAtMjJcblxuW1syXV1cblsxXSAtMjFcblxuW1szXV1cblsxXSAtMjBcblxuW1s0XV1cblsxXSAtMTlcblxuW1s1XV1cblsxXSAtMThcblxuW1s2XV1cblsxXSAtMTdcblxuW1s3XV1cblsxXSAtMTZcblxuW1s4XV1cblsxXSAtMTVcblxuW1s5XV1cblsxXSAtMTRcblxuW1sxMF1dXG5bMV0gLTEzXG4ifQ== -->
-<pre><code>[[1]]
-[1] -22
-
-[[2]]
-[1] -21
-
-[[3]]
-[1] -20
-
-[[4]]
-[1] -19
-
-[[5]]
-[1] -18
-
-[[6]]
-[1] -17
-
-[[7]]
-[1] -16
-
-[[8]]
-[1] -15
-
-[[9]]
-[1] -14
-
-[[10]]
-[1] -13</code></pre>
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>sapply return a vector</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FwcGx5ICgxOjEwLCBmdW5jdGlvbih4KSB4XjIpXG5cbmBgYCJ9 -->
+<pre class="r"><code>sapply (1:10, function(x) x^2)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgIDEgICA0ICAgOSAgMTYgIDI1ICAzNiAgNDkgIDY0ICA4MSAxMDBcbiJ9 -->
+<pre><code> [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQojIFRoZSBhcHBseSBmYW1pbHkNCmxhcHBseQ0KDQpBcGxseSBhIGZ1bmN0aW9uIHRvIGVhY2ggZWxlbWVudCBvZiBhIGxpc3QgYW5kIHJldHVybiBhIGxpc3QNCg0KYGBge3J9DQpsYXBwbHkoMToxMCwgZnVuY3Rpb24oeCkgeF4yKQ0KDQpsYXBwbHkoMToxMCwgZnVuY3Rpb24oeCkgeC0yKQ0KbGFwcGx5KDE6MTAsIGZ1bmN0aW9uKHgpIHt4LTIzfSkNCg0KYGBg</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyBUaGUgYXBwbHkgZmFtaWx5CmxhcHBseQoKQXBsbHkgYSBmdW5jdGlvbiB0byBlYWNoIGVsZW1lbnQgb2YgYSBsaXN0IGFuZCByZXR1cm4gYSBsaXN0CgpgYGB7cn0KbGFwcGx5KDE6MTAsIGZ1bmN0aW9uKHgpIHheMikKCmxhcHBseSgxOjEwLCBmdW5jdGlvbih4KSB4LTIpCmxhcHBseSgxOjEwLCBmdW5jdGlvbih4KSB7eC0yM30pCgpgYGAKCnNhcHBseSByZXR1cm4gYSB2ZWN0b3IgCgpgYGB7cn0Kc2FwcGx5ICgxOjEwLCBmdW5jdGlvbih4KSB4XjIpCgpgYGAKCg==</div>
 
 
 

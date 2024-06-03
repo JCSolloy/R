@@ -15,3 +15,11 @@ lapply(1:10, function(x) x-2)
 lapply(1:10, function(x) {x-23})
 
 ```
+
+sapply return a vector 
+
+```{r}
+sapply (1:10, function(x) x^2)
+
+```
+
