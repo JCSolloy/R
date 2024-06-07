@@ -1,0 +1,53 @@
+---
+title: "Homework-3.Rmd"
+author: "Juan Carlos Solloy"
+date: "06/06/2024"
+---
+Descripción
+ Investigue cómo leer un archivo CSV desde R.
+ Investigue acerca de la función select() de la paquetería de dplyr.
+ 
+ Lea el dataset compartido (primary_results.csv) y asignelo a la variable dataset_results.
+ Aplique los conocimientos de filter, arrange, mutate y también select para desarrollar los
+ siguientes ejercicios:
+ 
+```{r}
+library(dplyr)
+dataset_results <- read.csv("primary_results.csv")
+```
+ 
+# 1 Filtrar todos los votos del estado de Florida.
+```{r}
+dataset_results %>% 
+  filter(state == "Florida")
+```
+# 2 Utilice operadores lógicos (& and |), según corresponda:
+
+## 2.1 Filtrar votos para los candidatos Hyllary Clinton o Donald Trump.
+```{r}
+dataset_results %>% 
+  filter(candidate == "Hillary Clinton" | candidate == "Donald Trump")
+```
+## 2.2 Filtrar votos para el partido Demócrata y el condado Shelby.
+```{r}
+dataset_results %>% 
+  filter(party == "Democrat" & county == "Shelby")
+```
+## 2.3 Filtrar votos para el estado de Alabama y que la cantidad de votos sea mayor a 15000.
+```{r}
+dataset_results %>% 
+  filter(state == "Alabama" & votes > 15000)
+```
+# 4 Utilice el verbo mutate y arrange para el siguiente filtrado:
+
+## 4.1 Filtrar el partido Republicano, que el candidato sea Ted Cruz en el estado de Alaska, luego agregue una columna que se llame vote_count que sea la división de votes por fraction_votes (votes/fraction_votes), finalmente ordene de forma descendente por vote_count.
+```{r}
+dataset_results %>% 
+  filter(party == "Republican" & candidate == "Ted Cruz" & state == "Alaska") %>%
+  mutate(vote_count = votes/fraction_votes) %>% 
+  arrange(desc(vote_count))
+```
+
+
+
+ 
