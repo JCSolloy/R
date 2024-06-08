@@ -3,6 +3,7 @@ title: "Proyecto"
 output: html_notebook
 name: Juan Carlos Solloy Xicón
 course: Fundamentos de programación y scripting
+date: 08-07-2024
 ---
 
 # 1. Conociendo los datos
@@ -38,7 +39,6 @@ Si ahora graficamos la proporción de muertes en la clínica 1 como en la clíni
 
 ## 3.1 Utilice ggplot para hacer una gráfica lineal. Tome de referencia la columna creada en el inciso 2.1 (eje) versus la variable year (eje x).
 ```{r}
-
 ggplot(deaths_handwashing, aes(x = year, y = proportion_deaths)) +
   geom_line()
 ```
@@ -46,44 +46,39 @@ ggplot(deaths_handwashing, aes(x = year, y = proportion_deaths)) +
 ```{r}
 ggplot(deaths_handwashing, aes(x = year, y = proportion_deaths, color = clinic)) +
   geom_line()
-
 ```
 ## 3.3 Por último, imprima la gráfica y exponga su punto de vista.
 ```{r}
-
 ggplot(deaths_handwashing, aes(x = year, y = proportion_deaths, color = clinic)) +
   geom_line() +
   labs(title = "Proporción de muertes en las clínicas 1 y 2",
        x = "Año",
        y = "Proporción de muertes")
-
 ```
 
 # 4 Comienza el lavado de manos
 
-¿Por qué la proporción de muertes es mucho más alta en la Clínica 1? La única diferencia en ambas clínicas era que muchos estudiantes de medicina trabajaban en la Clínica 1, mientras que en la Clínica 2 no había tantos. Otro dato interesante es que los médicos que atendían partos solo se encargaban de esa función, mientras que los estudiantes también pasaban tiempo en las salas de autopsias examinando cadáveres.
+¿Por qué la proporción de muertes es mucho más alta en la Clínica 1? 
+La única diferencia en ambas clínicas era que muchos estudiantes de medicina trabajaban en la Clínica 1, mientras que en la Clínica 2 no había tantos. 
+Otro dato interesante es que los médicos que atendían partos solo se encargaban de esa función, mientras que los estudiantes también pasaban tiempo en las salas de autopsias examinando cadáveres.
 
-Se empezó a sospechar que algo en los cadáveres, propagado de las manos de los estudiantes de medicina, causaba la enfermedad. Entonces, en un intento desesperado por detener las altas tasas de mortalidad, se decretó: ¡Lávese las manos en todo momento!
+Se empezó a sospechar que algo en los cadáveres, propagado de las manos de los estudiantes de medicina, causaba la enfermedad. 
+Entonces, en un intento desesperado por detener las altas tasas de mortalidad, se decretó: ¡Lávese las manos en todo momento!
 
 ## 4.1 Cargue los datos mensuales de la Clínica 1 para ver si el lavado de manos tuvo algún efecto, para esto lea el archivo deaths_clinic1.csv y asígnelo a una nueva variable.
 ```{r}
-
 deaths_clinic1 <- read_csv("deaths_clinic_1.csv")
-
 ```
 
 ## 4.2 Utilice ggplot para hacer una gráfica lineal. La gráfica tendrá la característica de ser dual (dos ejes Y). Para el eje X se utilizará la variable date y para Y1 y Y2, serán births y deaths respectivamente.
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date)) +
   geom_line(aes(y = births, color = "Nacimientos")) +
   geom_line(aes(y = deaths, color = "Muertes")) +
   scale_y_continuous(sec.axis = sec_axis(~ . * 0.1, name = "Muertes"))
-
 ```
 ## 4.3 Utilice la funcion scale_y_continuous para agregar un título a cada eje Y.
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date)) +
   geom_line(aes(y = births, color = "Nacimientos")) +
   geom_line(aes(y = deaths, color = "Muertes")) +
@@ -92,7 +87,6 @@ ggplot(deaths_clinic1, aes(x = date)) +
 ## 4.4 Agregue un título al eje X y un título general a toda la gráfica.
 
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date)) +
   geom_line(aes(y = births, color = "Nacimientos")) +
   geom_line(aes(y = deaths, color = "Muertes")) +
@@ -102,7 +96,6 @@ ggplot(deaths_clinic1, aes(x = date)) +
 ```
 ## 4.5 Establezca color verde al comportamiento de la variable births y naranja para deaths. 
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date)) +
   geom_line(aes(y = births, color = "Nacimientos")) +
   geom_line(aes(y = deaths, color = "Muertes")) +
@@ -129,30 +122,25 @@ ggplot(deaths_clinic1, aes(x = date)) +
 Perspectiva lineal
 ## 5.1 Agregue una nueva columna a la variable creada en el inciso 4.1. Esta nueva columna se calculará como la proporción de muertes por número de nacimientos. Guarde este cambio en una nueva variable.
 ```{r}
-
 deaths_clinic1 <- deaths_clinic1 %>%
   mutate(proportion_deaths = deaths / births)
-
 ```
 
 
 ## 5.2 Imprima las primeras filas del dataframe del punto anterior. Haga uso de la función head()
 ```{r}
-
 head(deaths_clinic1)
 ```
 
 ## 5.3 Elabore una gráfica lineal utilizando la columna creada en el incico 5.1 (eje y) versus la colunma date (eje x).
 
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths)) +
   geom_line()
 ```
 
 ## 5.4 Utilice la funcion labs para dar al eje x y al eje y una estética a las etiquetas.
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths)) +
   geom_line() +
   labs(title = "Proporción de muertes en la Clínica 1",
@@ -161,7 +149,6 @@ ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths)) +
 ```
 ## 5.5 Por último, imprima la gráfica y concluya.
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths)) +
   geom_line() +
   labs(title = "Proporción de muertes en la Clínica 1",
@@ -173,26 +160,21 @@ Perspectiva de barras
 ## 5.6 Use group_by para la variable year y summarise para encontrar la media tomando de referencia la variable del inciso 5.1. Guarde el resultado en una nueva variable.
 
 ```{r}
-
 deaths_clinic1$year <- year(deaths_clinic1$date)
-
 deaths_clinic1_yearly <- deaths_clinic1 %>%
   group_by(year) %>%
   summarise(mean_proportion_deaths = mean(proportion_deaths))
-
 ```
 
 ## 5.7 Utilice la variable creada en el inciso anterior para crear un gráfico de barras que muestre la media en cada año.
 
 ```{r}
-
 ggplot(deaths_clinic1_yearly, aes(x = year, y = mean_proportion_deaths)) +
   geom_bar(stat = "identity")
 ```
 
 ## 5.8 Por último, imprima la grafica y concluya.
 ```{r}
-
 ggplot(deaths_clinic1_yearly, aes(x = year, y = mean_proportion_deaths)) +
   geom_bar(stat = "identity") +
   labs(title = "Proporción de muertes promedio en la Clínica 1",
@@ -206,22 +188,17 @@ El efecto del lavado de manos se hace aún más claro si lo resaltamos en el gr�
 
 # 6.1 Agregue una columna a la variable creada en el inciso 5.1, está columna será TRUE a partir del año en que se impuso el lavado de manos y FALSE para años anteriores. Guarde este cambio en una nueva variable.
 ```{r}
-
 deaths_clinic1 <- deaths_clinic1 %>%
   mutate(handwashing_started = date >= "1847-01-01")
-
 ```
 
 ## 6.2 Construya una gráfica lineal tomando de referencia la variable con la proporción (muertes/nacimientos) para el eje y versus la variable date para el eje x. Haga que el color de la linea dependa de la columna creada en el inciso 6.1
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
   geom_line()
-
 ```
 ## 6.3 Utilice la función labs para dar al eje x y al eje y una estética a las etiquetas.
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
   geom_line() +
   labs(title = "Proporción de muertes en la Clínica 1",
@@ -230,7 +207,6 @@ ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_
 ```
 ## 6.4 Imprima la gráfica y concluya
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
   geom_line() +
   labs(title = "Proporción de muertes en la Clínica 1",
@@ -243,9 +219,7 @@ Nuevamente, las estadísticas muestran que lavarse las manos tuvo un efecto enor
 
 ## 7.1 Tome de referencia la columna que se agregó en el inciso 6.1 y utilice la función groub_by para crear un agrupamiento.
 
-tomar month de date como dato para poder graficarlo
 ```{r}
-
 deaths_clinic1$month <- month(deaths_clinic1$date)
 monthly <- deaths_clinic1 %>%
   group_by(handwashing_started, year(date), month(date)) %>%
@@ -253,7 +227,6 @@ monthly <- deaths_clinic1 %>%
 ```
 ## 7.2 En continuidad al inciso anterior, aplique summarise para calcular el promedio de la proporción de muertes antes y después de que se impusiera el lavado de manos. Tome de referencia la variable con la proporción (muertes/nacimientos).
 ```{r}
-
 monthly_summary <- monthly %>%
   group_by(handwashing_started) %>%
   summarise(mean_proportion_deaths = mean(mean_proportion_deaths))
@@ -262,19 +235,16 @@ monthly_summary <- monthly %>%
 ## 7.3 Asigne el resultado a una nueva variable e imprímala. 
 
 ```{r}
-
 monthly_summary
 ```
 ## 7.4 Utlice ggplot para crear un boxplot que tome de referencia la columna creada en el inciso 6.1 (eje x) versus la variable de proporción (muertes/nacimientos).
 ```{r}
-
 ggplot(monthly, aes(x = handwashing_started, y = mean_proportion_deaths)) +
   geom_boxplot()
 ```
 
 ## 7.5 Imprima la gráfica y concluya en función de los incisos 7.3 y 7.4.
 ```{r}
-
 ggplot(monthly, aes(x = handwashing_started, y = mean_proportion_deaths)) +
   geom_boxplot()
 ```
@@ -285,9 +255,7 @@ ggplot(monthly, aes(x = handwashing_started, y = mean_proportion_deaths)) +
 
 Utilice la función t.test para calcular un intervalo de confianza del 95%. Los dos grupos que tenemos son proporción mensual de muertes antes y después de que comenzara el lavado de manos. Tome de referencia la columna con la proporción (muertes/nacimientos) y la columna creada en el inciso 6.1.
 ```{r}
-
 t.test(monthly$mean_proportion_deaths ~ monthly$handwashing_started)
-
 ```
 Interprete los datos resultantes y proporcione una conclusión.
 
@@ -295,18 +263,14 @@ Interprete los datos resultantes y proporcione una conclusión.
 
 ## 9.1 Aplique funciones como filter, count, select o visualizaciones de tipo histograma o gráfica de puntos, que le permitan descubrir comportamientos o tendencias en los datos. No se limite a estas sugerencia, puede aplciar cualquier otro tipo de función.
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
   geom_line() +
   labs(title = "Proporción de muertes en la Clínica 1",
        x = "Fecha",
        y = "Proporción de muertes")
-
-
 ```
 ## 9.2 Para cada análisis estadístico que proporcione concluya en función de los resultados obtenidos.
 ```{r}
-
 ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
   geom_line() +
   labs(title = "Proporción de muertes en la Clínica 1",

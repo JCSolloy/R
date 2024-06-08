@@ -3,16 +3,22 @@ title: "Homework-3.Rmd"
 author: "Juan Carlos Solloy"
 date: "06/06/2024"
 ---
-Descripción
- Investigue cómo leer un archivo CSV desde R.
- Investigue acerca de la función select() de la paquetería de dplyr.
- 
- Lea el dataset compartido (primary_results.csv) y asignelo a la variable dataset_results.
- Aplique los conocimientos de filter, arrange, mutate y también select para desarrollar los
- siguientes ejercicios:
- 
+Para leer archivos csv se utiliza la función rea.csv() de la librería base de R.
 ```{r}
 library(dplyr)
+dataset_results <- read.csv("primary_results.csv")
+```
+ 
+La función select() se utiliza para seleccionar columnas de un dataset, los argumentos que se le pasan son el dataset y las columnas que se desean seleccionar. Ejemplo:
+```{r}
+select(dataset_results, state, county, candidate, party, votes)
+```
+ 
+Lea el dataset compartido (primary_results.csv) y asignelo a la variable dataset_results.
+Aplique los conocimientos de filter, arrange, mutate y también select para desarrollar los
+siguientes ejercicios:
+ 
+```{r}
 dataset_results <- read.csv("primary_results.csv")
 ```
  
