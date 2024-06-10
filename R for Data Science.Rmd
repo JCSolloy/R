@@ -156,4 +156,95 @@ ggplot(data = mpg) +
     geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
 ```
 ## Transformacion estadistica.
+```{r}
+library(ggplot2)
+
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut))
+```
+Muchos graficos como los diagramas de dispoersion trazan los valors brutos de su conjunto de datos, otros como los graficos de barras calculan nuevos valores para mostrar.
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, y = ..prop.., group = 1))
+```
+El algoritmo usado para calcular nuevos valores para una grafica se llama stat, de statistical transformation.
+
+Se pueden usar cada geom porque cada una tiene un stat por defecto. 
+
+El stat identity y realiza ninguna transformacion, se usa para graficas de barras y diagramas de dispersion.
+
+ggplot2 provee 20 stats diferentes, cada uno con diferentes argumentos, se pueden ver con ?stat_summary.
+Tambien puedes colorear las barras.
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = cut))
+```
+
+Tambien existen ajustes de posicion para las barras.
+```{r}
+
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = cut), position = "dodge")
+
+```
+dodge posiciona las barras una al lado de la otra.
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = cut), position = "fill")
+```
+
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = cut), position = "stack")
+```
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = cut), position = "identity")
+
+```
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+```
+jitter es un ajuste de posicion que agrega un poco de ruido a los datos para que se puedan ver mejor.
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy), position = "jitter")
+```
+# Sistemas de coordenadas
+ggplot2 soporta dos tipos de sistemas de coordenadas, coordenadas cartesianas y coordenadas polares.
+
+## Coordenadas cartesianas
+Las coordenadas cartesianas son el sistema de coordenadas mas comun, se usan para graficas de dispersion, lineas y barras.
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+## Coordenadas polares
+Las coordenadas polares son usadas para graficas circulares, como los graficos de pastel y los diagramas de radar.
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut)) +
+  coord_polar()
+```
+coord_flip invierte los ejes x y y.
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  coord_flip()
+```
+
+coord_quickmap ajusta la relacion de aspecto de los ejes para que coincidan con la relacion de aspecto de los datos.
+```{r}
+nz <- map_data("nz")
+
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", color = "black") +
+  coord_fixed()
+```
+
+
+
 
