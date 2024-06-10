@@ -9,6 +9,7 @@ First steps
 Los carros con motores grandes usan mas combustible que los pequeños.
 
 ```{r}
+library(ggplot2)
 ggplot2::mpg
 mpg
 
@@ -17,7 +18,7 @@ mpg
 ## Creating a ggplot
 
 ```{r}
-ggplot(data=mpg) + geom_point(mapping = aes(x = displ, y =hwy))
+ggplot(data=mpg) + geom_point(mapping = aes(x = displ, y =hwy, color = class))
 ```
 La funcion ggplot() crea un sistema de coordenadas a la cual se pueden agregar capas.
 El primer parametro de ggplot() es el conjunto de datos a usar en la grafica, esto crea una grafica vacia.
@@ -37,3 +38,122 @@ Para hacer una grafica, reemplace las secciones entre corchetes en el siguiente 
 ggplot(data = <DATA>) +
     <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
 ```
+
+```{r}
+ggplot(data = mpg)
+```
+```{r}
+data
+```
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = hwy, y = cyl))
+```
+
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy, size=class)) 
+```
+Con alpha se controla la transparencia de los puntos, hay que tomar en cuenta que ggplot solo tiene 6 formas de puntos. 
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy, alpha=class)) 
+```
+Tambien se pueden usar formas para separar las clases.
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy, shape=class)) 
+```
+Tambien se pueden poner propiedad como el color.
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy), color = "blue") 
+```
+## Facets
+Facets son una forma de dividir una grafica en multiples subgraficas basadas en una variable en el conjunto de datos. 
+Para plotear una grafica con facetas, se agrega un facet_wrap() o facet_grid() a la grafica. 
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    facet_wrap(~ class, nrow = 2)
+```
+O facet_grid()
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    facet_grid(drv ~ cyl)
+```
+## Geometric Objects
+ggplot2 tiene 6 funciones geometricas basicas que se pueden usar para crear graficas.
+- geom_point() para graficas de dispersion
+- geom_smooth() para lineas de regresion
+- geom_bar() para graficas de barras
+- geom_histogram() para histogramas
+- geom_boxplot() para boxplots
+- geom_tile() para mapas de calor
+
+## Estetica
+La estetica de una grafica se refiere a como se ven los elementos de la grafica.
+La funcion aes() es usada para mapear variables a propiedades visuales. 
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+En este caso, la estetica de color es mapeada a la variable class.
+
+## Facets
+Facets son una forma de dividir una grafica en multiples subgraficas basadas en una variable en el conjunto de datos.
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    facet_wrap(~ class, nrow = 2)
+```
+## Themes
+Los temas controlan el aspecto de todos los elementos de la grafica, como los ejes, la leyenda y el fondo.
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    theme_bw()
+```
+Los tipos de temas son:
+- theme_gray() el tema por defecto
+- theme_bw
+- theme_linedraw()
+- theme_light()
+- theme_minimal()
+- theme_classic()
+- theme_void()
+
+## Saving a plot
+Para guardar una grafica en un archivo, se puede usar la funcion ggsave().
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy)) 
+
+ggsave("myplot.png")
+```
+
+## Exercise
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
+    facet_wrap(~ class, nrow = 2)
+```
+Se pueden mostrar varias geometrias en la misma grafica.
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    geom_smooth(mapping = aes(x = displ, y = hwy))
+```
+Se puede plotear diferentes datos para cada capa y tipo de geometria.
+```{r}
+ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
+```
+## Transformacion estadistica.
+
