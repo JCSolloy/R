@@ -23,6 +23,7 @@ deaths_handwashing <- read_csv("deaths_handwashing.csv")
 deaths_handwashing
 ```
 # 2 El alarmante número de muertes
+
 La tabla anterior muestra el número de mujeres que dieron a luz durante los años 1841 a 1846 en una ciudad al noreste de Austria, en dos clínicas en particular. Notará que dar a luz era muy peligroso; un número alarmante de mujeres murió como resultado del parto. Vemos esto con mayor claridad si observamos la proporción de muertes con respecto al número de mujeres que dieron a luz.
 
 ## 2.1 Use mutate para agregar una nueva columna que se calculará como la proporción de muertes por número de nacimientos.
@@ -35,8 +36,7 @@ deaths_handwashing <- deaths_handwashing %>%
 ```{r}
 deaths_handwashing
 ```
-# 3 Muerte en las clínicas
-Si ahora graficamos la proporción de muertes en la clínica 1 como en la clínica 2, veremos un patrón curioso.
+# 3 Muerte en las clínicas Si ahora graficamos la proporción de muertes en la clínica 1 como en la clínica 2, veremos un patrón curioso.
 
 ## 3.1 Utilice ggplot para hacer una gráfica lineal. Tome de referencia la columna creada en el inciso 2.1 (eje) versus la variable year (eje x).
 ```{r}
@@ -87,7 +87,6 @@ ggplot(deaths_clinic1, aes(x = date)) +
   scale_y_continuous(name = "Nacimientos", sec.axis = sec_axis(~ . * 0.1, name = "Muertes"))
 ```
 ## 4.4 Agregue un título al eje X y un título general a toda la gráfica.
-
 ```{r}
 ggplot(deaths_clinic1, aes(x = date)) +
   geom_line(aes(y = births, color = "Nacimientos")) +
@@ -107,7 +106,6 @@ ggplot(deaths_clinic1, aes(x = date)) +
   scale_color_manual(values = c("Nacimientos" = "green", "Muertes" = "orange"))
 ```
 ## 4.6 Imprima la gráfica resultante.
-Imprimir la grafica con plotly
 ```{r}
 ggplotly(ggplot(deaths_clinic1, aes(x = date)) +
   geom_line(aes(y = births, color = "Nacimientos")) +
@@ -179,7 +177,6 @@ ggplot(deaths_clinic1_yearly, aes(x = year, y = mean_proportion_deaths)) +
 ```
 
 ## 5.8 Por último, imprima la grafica y concluya.
-graficar con plotly
 ```{r}
 ggplotly(ggplot(deaths_clinic1_yearly, aes(x = year, y = mean_proportion_deaths)) +
   geom_bar(stat = "identity") +
