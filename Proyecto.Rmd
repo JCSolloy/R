@@ -8,9 +8,10 @@ date: 08-07-2024
 
 # 1. Conociendo los datos
 
-## 1.1 Cargue el paquete tidiberse
+## 1.1 Cargue el paquete tidyverse
 ```{r}
 library(tidyverse)
+library(plotly)
 ```
 
 ## 1.2 Lea el archivo death_handwashing.csv usando read_csv y asígnelo a una variable.
@@ -49,11 +50,12 @@ ggplot(deaths_handwashing, aes(x = year, y = proportion_deaths, color = clinic))
 ```
 ## 3.3 Por último, imprima la gráfica y exponga su punto de vista.
 ```{r}
-ggplot(deaths_handwashing, aes(x = year, y = proportion_deaths, color = clinic)) +
+ggplotly(ggplot(deaths_handwashing, aes(x = year, y = proportion_deaths, color = clinic)) +
   geom_line() +
   labs(title = "Proporción de muertes en las clínicas 1 y 2",
        x = "Año",
        y = "Proporción de muertes")
+    )
 ```
 
 # 4 Comienza el lavado de manos
@@ -105,16 +107,18 @@ ggplot(deaths_clinic1, aes(x = date)) +
   scale_color_manual(values = c("Nacimientos" = "green", "Muertes" = "orange"))
 ```
 ## 4.6 Imprima la gráfica resultante.
+Imprimir la grafica con plotly
 ```{r}
-
-ggplot(deaths_clinic1, aes(x = date)) +
+ggplotly(ggplot(deaths_clinic1, aes(x = date)) +
   geom_line(aes(y = births, color = "Nacimientos")) +
   geom_line(aes(y = deaths, color = "Muertes")) +
   scale_y_continuous(name = "Nacimientos", sec.axis = sec_axis(~ . * 0.1, name = "Muertes")) +
   labs(title = "Nacimientos y muertes en la Clínica 1",
        x = "Fecha") +
   scale_color_manual(values = c("Nacimientos" = "green", "Muertes" = "orange"))
+)
 ```
+
 ## 4.7 Construya una opinión con el resultado de la gráfica.
 
 # 5 El efecto del lavado de manos. Analicemos la proporción de muertes a lo largo del tiempo.
@@ -149,11 +153,12 @@ ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths)) +
 ```
 ## 5.5 Por último, imprima la gráfica y concluya.
 ```{r}
-ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths)) +
+ggplotly(ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths)) +
   geom_line() +
   labs(title = "Proporción de muertes en la Clínica 1",
        x = "Fecha",
        y = "Proporción de muertes")
+)
 ```
 Perspectiva de barras
 
@@ -174,12 +179,14 @@ ggplot(deaths_clinic1_yearly, aes(x = year, y = mean_proportion_deaths)) +
 ```
 
 ## 5.8 Por último, imprima la grafica y concluya.
+graficar con plotly
 ```{r}
-ggplot(deaths_clinic1_yearly, aes(x = year, y = mean_proportion_deaths)) +
+ggplotly(ggplot(deaths_clinic1_yearly, aes(x = year, y = mean_proportion_deaths)) +
   geom_bar(stat = "identity") +
   labs(title = "Proporción de muertes promedio en la Clínica 1",
        x = "Año",
        y = "Proporción de muertes promedio")
+)
 ```
 # Los resultados del lavado de manos
 
@@ -207,11 +214,11 @@ ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_
 ```
 ## 6.4 Imprima la gráfica y concluya
 ```{r}
-ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
+ggplotly(ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
   geom_line() +
   labs(title = "Proporción de muertes en la Clínica 1",
        x = "Fecha",
-       y = "Proporción de muertes")
+       y = "Proporción de muertes"))
 ```
 # 7 ¿Más lavado de manos, menos muertes?
 
