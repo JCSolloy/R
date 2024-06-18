@@ -1,0 +1,107 @@
+---
+title: "Homework 4"
+name: "Juan Carlos Solloy"
+course: "Fundamentos de programación y scritping"
+date: "18-06-2024"
+---
+
+Construya la variable diamonds que contenga la lectura del CSV, luego explore el data frame con la funcion `str()`.
+```{r}
+library(ggplot2)
+library(dplyr)
+library(plotly)
+diamonds <- read.csv("diamonds.csv")
+```
+
+# 1 Dispersión
+
+## 1.1 Construya un gráfico de dispersión colocando en la estética carat (eje x) versus price (eje y), luego devuelva el gráfico.
+```{r}
+ggplot(data = diamonds) + 
+  geom_point(mapping = aes(x = carat, y = price))
+```
+## 1.2 Edite la estética y mapee el color con la variable clarity.
+```{r}
+ggplot(data = diamonds) + 
+  geom_point(mapping = aes(x = carat, y = price, color = clarity))
+```
+## 1.3 Devuelva el gráfico con esta modificación.
+```{r}
+ggplotly(ggplot(data = diamonds) + 
+  geom_point(mapping = aes(x = carat, y = price, color = clarity)))
+```
+# 2 Histograma 
+
+## 2.1 Construya el tipo de gemoetría histograma para la variable price. Configure el parámetro bins con el valor 40 y devuelva el gráfico.
+```{r}
+ggplot(data = diamonds) + 
+  geom_histogram(mapping = aes(x = price), bins = 40)
+```
+## 2.2 Agregue una escala logarítmica de base 10 y devuelva el gráfico para ver la diferencia.
+```{r}
+ggplot(data = diamonds) + 
+  geom_histogram(mapping = aes(x = price), bins = 40) + 
+  scale_x_log10()
+```
+# 3 Boxplots
+## 3.1 Construya un gráfico de cajas colocando en la estética la variable cut (eje x) versus price (eje y). Agregue una escala logarítmica por defecto y por último devuleva el gráfico.
+```{r}
+ggplot(data = diamonds) + 
+  geom_boxplot(mapping = aes(x = cut, y = price)) + 
+  scale_y_log10()
+```
+## 3.2 Edite el color de cada caja con el parámetro fill dentro de la estética y asignando la variable cut. Por último devuelva el gráfico.
+```{r}
+ggplot(data = diamonds) + 
+  geom_boxplot(mapping = aes(x = cut, y = price, fill = cut)) + 
+  scale_y_log10()
+```
+# 4 Faceting
+## 4.1 Filtre diamonds por la variable price que sea mayor a 1000 y por cut que contenga las categorías Good, Ideal y Premium. Luego asigne el resultado a la variable filtered_price. Dado que cut debe tomar en cuenta tres categorías específicas puede hacer uso del pie %in%.
+```{r}
+filtered_price <- diamonds[diamonds$price > 1000 & diamonds$cut %in% c("Good", "Ideal", "Premium"), ]
+```
+## 4.2 Utilice al variable filtered_price para construir un gráfico de barras, en la estética configure x=cut, y=depth.
+```{r}
+ggplot(data = filtered_price) + 
+  geom_bar(mapping = aes(x = cut, y = depth), stat = "identity")
+```
+## 4.3 Por ultimo aplique faceting para la variable clarity y devuelva la parcela de gráficos. 
+```{r}
+ggplot(data = filtered_price) + 
+  geom_bar(mapping = aes(x = cut, y = depth), stat = "identity") + 
+  facet_wrap(~clarity)
+```
+## 4.4 Edite la estética  y configure el parámetro fill con la variable clarity. Luego devuelva la parcela de gráficos con esta modificación.
+```{r}
+ggplotly(ggplot(data = filtered_price) + 
+  geom_bar(mapping = aes(x = cut, y = depth, fill = clarity), stat = "identity") + 
+  facet_wrap(~clarity))
+```
+# Grouping and summarizing
+
+## 1 Utilice diamonds para construir un agrupamiento por la variable cut, luego aplique summarieze para encontrar la media de las variables x, y, z (los nombres de los valores sumarizados serán mediaX, mediaY, mediaZ, respectivamente). Asigne el resultado a la variable median_dimension_diamond, por último imprima la variable.
+```{r}
+median_dimension_diamond <- diamonds %>%
+  group_by(cut) %>%
+  summarize(mediaX = mean(x), mediaY = mean(y), mediaZ = mean(z))
+```
+
+## 2 Utilice diamonds para filtrar por la variable cut igual a Premium. Luego agrupe por la variable clarity y utilice summarize para encontrar minimo y maximo de price (los nombres de los valores sumarizados serán minPrice y maxPrice, respectivamente). Asigne el resultado a la variable cut_premium e imprima el valor de la variable.
+```{r}
+cut_premium <- diamonds %>%
+  filter(cut == "Premium") %>%
+  group_by(clarity) %>%
+  summarize(minPrice = min(price), maxPrice = max(price))
+```
+# 3 Construya un gráfico de barras y utilice cut_premium como set de datos, congigure x=clarity, y=maxPrice y el colro de relleno (fill) con la variable clarity. Por último devuelva el gráfico.
+```{r}
+ggplotly(ggplot(data = cut_premium) + 
+  geom_bar(mapping = aes(x = clarity, y = maxPrice, fill = clarity), stat = "identity"))
+```
+
+
+
+
+
+
