@@ -62,7 +62,136 @@ library(tidyverse)
 counties <- read.csv("counties.csv")
 glimpse(counties)
 
-select(counties, state, county, population, men, women)
+counties %>%
+  select(state, county, population, men, women) %>%
+  mutate(proportion_men = men/population) %>%
+  filter(population > 100000) %>%
+  arrange(desc(proportion_men))
+```
+The count verb
+```{r}
+counties_selected <- counties %>%
+  count(region, sort=TRUE)
+counties_selected
 ```
 
+```{r}
+counties_selected <- counties %>%
+  count(state, wt=citizens)
+counties_selected
+```
+Mutating and counting
+```{r}
+counties %>% 
+  mutate(population_walk = population*walk/100) %>%
+  count(state, wt=population_walk, sort=TRUE)
+```
+Summarizing
+The summarize verb is used to reduce a table to a single row. It is often used in conjunction with group_by to summarize within groups.
+
+```{r}
+counties %>%
+  summarize(min_populatio = min(population),
+            max_population = max(population),
+            mean_population = mean(population),
+            median_population = median(population))
+
+counties %>%
+  group_by(state) %>%
+  summarize(total_area = sum(land_area), total_population = sum(population))
+```
+
+```{r}
+counties %>%
+  group_by(state) %>%
+  summarize(total_area = sum(land_area), total_population = sum(population)) %>%
+  mutate(density = total_population/total_area)
+```
+Summarizing by state and region
+```{r}
+counties %>%
+  group_by(state, region) %>%
+  summarize(total_pop = sum(population))
+```
+Part I
+Add a new column high_polulation that indicates true or false is the population is greater than 1000000.
+Filter rows where high_population is true, income is greater than 50000, group by state, 
+summarize the data by calculating the total population, average income, and the number of registrations per state,
+the latter is calculated with the n() function, store the result in the variable result_data_1 and print
+```{r}
+result_data_1 <- counties %>%
+  mutate(high_population = population > 100000) %>%
+  filter(high_population == TRUE & income > 50000) %>%
+  group_by(state) %>%
+  summarize(total_population = sum(population),
+            average_income = mean(income),
+            number_of_registrations = n())
+result_data_1
+```
+Part II
+select specific columns: state, county, population, income
+add a new column for per capita income( per capita = income/population)
+sort data by per capita income in descending order
+store the result in the variable result_data_2 and print
+```{r}
+result_data_2 <- counties %>%
+  select(state, county, population, income) %>%
+  mutate(per_capita = income/population) %>%
+  filter(population > 75000) %>%
+  arrange(desc(per_capita))
+result_data_2
+```
+The top_n verb
+```{r}
+counties %>%
+  group_by(region) %>%
+  top_n(5, population)
+```
+```{r}
+counties %>%
+  select(state, metro, population) %>%
+  group_by(state, metro) %>%
+  summarize(total_population = sum(population)) %>%
+  top_n(1, total_population)
+
+counties %>%
+  select(state, metro, population) %>%
+  group_by(state, metro) %>%
+  summarize(total_population = sum(population)) %>%
+  top_n(1, total_population) %>%
+  ungroup()
+```
+Selecting columns
+```{r}
+counties %>%
+  select(state, county, population, professional:production) %>%
+  arrange(desc(service))
+```
+```{r}
+counties %>%
+  select(state, county, population, professional, ends_with("work")) %>%
+  filter(public_work >= 50 )
+```
+rename change the name of a column
+```{r}
+counties %>%
+  select(state, county, population, professional, ends_with("work")) %>%
+  filter(public_work >= 50 ) %>%
+  rename(public_work = public_work)
+```
+Transmute is used to add new columns to a table, while keeping the existing columns.
+```{r}
+counties %>%
+  transmute(state, county, population, density = population/land_area)
+```
+```{r}
+counties %>%
+  rename(unemployment_rate = unemployment) %>%
+  select(state, county, population, unemployment_rate) %>%
+```
+
+```{r}
+counties %>%
+  mutate(fraction_women = women/population)
+```
 
