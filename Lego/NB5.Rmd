@@ -1,0 +1,65 @@
+---
+title: "NB5"
+date: "2024-06-22"
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+
+sets <- read_csv('sets.csv')
+themes <- read_csv('themes.csv')
+parts <- read_csv('parts.csv')
+part_categories <- read_csv('part_categories.csv')
+inventory_parts <- read_csv('inventory_parts.csv')
+inventories <- read_csv('inventories.csv')
+colors <- read_csv('colors.csv')
+
+```
+
+inner_join is the key to bring tables together. It is a function from the dplyr package. It is used to combine two tables based on a common column. The common column is the one that is present in both tables. The syntax for inner_join is as follows:
+```{r}
+parts
+inventory_parts
+```
+```{r}
+parts %>% 
+  inner_join(part_categories, by = c("part_cat_id" = "id"))
+```
+
+```{r}
+parts %>% 
+  inner_join(part_categories, by = c("part_cat_id" = "id"), suffix = c("_part", "_category"))
+```
+invertory_parts 
+
+```{r}
+inventory_parts
+```
+
+```{r}
+parts %>% 
+  inner_join(inventory_parts, by = c("part_num" = "part_num"))
+```
+El inner_join se puede hacer en cualquier orden
+```{r}
+inventory_parts %>% 
+  inner_join(parts, by = c("part_num" = "part_num"))
+```
+You can string together multiple inner_join functions to combine more than two tables. The following code combines the parts, part_categories, and inventory_parts tables:
+```{r}
+parts %>% 
+  inner_join(part_categories, by = c("part_cat_id" = "id")) %>% 
+  inner_join(inventory_parts, by = c("part_num" = "part_num"))
+```
+
+Join set and inventory, and then join the result with parts and then with colors
+```{r}
+sets %>% 
+  inner_join(inventories, by = c("set_num" = "set_num")) %>% 
+  inner_join(inventory_parts, by = c("id" = "inventory_id")) %>% 
+  inner_join(colors, by = c("color_id" = "id"), suffix = c("_set", "_color"))
+```
+Inner join, left join, right join, and full join are the four types of joins that are commonly used in data analysis. The inner join is the most commonly used join. It returns only the rows that have matching values in both tables. The left join returns all the rows from the left table and the matched rows from the right table. The right join returns all the rows from the right table and the matched rows from the left table. The full join returns all the rows when there is a match in one of the tables. If there is no match, the result is NA. The syntax for left_join, right_join, and full_join is similar to inner_join. The only difference is the type of join that is specified in the function. The following code demonstrates how to use left_join, right_join, and full_join:
+
+

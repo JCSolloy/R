@@ -1,0 +1,19 @@
+---
+title: "NB5"
+date: "2024-06-22"
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+
+sets <- read_csv('sets.csv')
+themes <- read_csv('themes.csv')
+parts <- read_csv('parts.csv')
+part_categories <- read_csv('part_categories.csv')
+inventory_parts <- read_csv('inventory_parts.csv')
+inventories <- read_csv('inventories.csv')
+colors <- read_csv('colors.csv')
+
+```
+
