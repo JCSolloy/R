@@ -1,13 +1,12 @@
 ---
 title: "Proyecto"
-output: html_notebook
-name: Juan Carlos Solloy Xicón
-course: Fundamentos de programación y scripting
-date: 08-07-2024
+name: "Juan Carlos Solloy Xicón"
+course: "Fundamentos de programación y scripting"
+date: "03-07-2024"
 ---
 # Descripción
 
-La sepáis ocasiona en el mundo más de mil muertes cada día, muchos de estos pacientes adquieren la infección estando hospitalizados y constituye la complicación intrahospitalaria más frecuente. La infección de pacientes por las manos de contaminadas del personal de salud es una de las formas de diseminación de los agentes infecciosos. La higiene de las manos es el factor individual más importante para el control de las infecciones, es difícil entender que un hecho tan rutinario en la práctica de la medicina, como lavarse las manos previo a examinar a un paciente, haya causado tanta controversia en la época de 1800.
+La sepsis ocasiona en el mundo más de mil muertes cada día, muchos de estos pacientes adquieren la infección estando hospitalizados y constituye la complicación intrahospitalaria más frecuente. La infección de pacientes por las manos de contaminadas del personal de salud es una de las formas de diseminación de los agentes infecciosos. La higiene de las manos es el factor individual más importante para el control de las infecciones, es difícil entender que un hecho tan rutinario en la práctica de la medicina, como lavarse las manos previo a examinar a un paciente, haya causado tanta controversia en la época de 1800.
 
 A principios de la década de 1840 se descubrió una enfermedad mortal que afectaba a las mujeres que acababan de dar a luz, cerca del 10% de las mujeres morían a causa de esta enfermedad y el origen provenía de las manos contaminadas del personal médico que atendía los partos.
 
@@ -18,8 +17,8 @@ En este proyecto, vamos analizar los datos que demuestran la importancia del lav
 ## 1.1 Cargue el paquete tidyverse
 ```{r}
 library(tidyverse)
-install.packages("plotly")
 library(plotly)
+library(dplyr)
 ```
 
 ## 1.2 Lea el archivo death_handwashing.csv usando read_csv y asígnelo a una variable.
@@ -69,9 +68,9 @@ ggplotly(ggplot(deaths_handwashing, aes(x = year, y = proportion_deaths, color =
 ```
 
 ## Observaciones
-La proporción de muertes en la Clínica 1 es mucho más alta que en la Clínica 2. 
-A partir del año 1842 la proporción de muertes en ambas clínicas empezó a disminuir de manera significativa.
-En el año 1845 la proporción de muertes tuvo un aumento en ambas clínicas.
+- La proporción de muertes en la Clínica 1 es mucho más alta que en la Clínica 2, esto debido, como se menciona en la descripción, a que la enfermedad se propagaba por las manos contaminadas del personal médico, y en la clínica 1 había más estudiantes de medicina que en la clínica 2, quienes ademas de atender partos, también pasaban tiempo en las salas de autopsias examinando cadáveres.
+- A partir del año 1842 la proporción de muertes en ambas clínicas empezó a disminuir de manera significativa.
+- En el año 1845 la proporción de muertes tuvo un aumento en ambas clínicas.
 
 # 4 Comienza el lavado de manos
 
@@ -85,6 +84,7 @@ Entonces, en un intento desesperado por detener las altas tasas de mortalidad, s
 ## 4.1 Cargue los datos mensuales de la Clínica 1 para ver si el lavado de manos tuvo algún efecto, para esto lea el archivo deaths_clinic1.csv y asígnelo a una nueva variable.
 ```{r}
 deaths_clinic1 <- read_csv("deaths_clinic_1.csv")
+deaths_clinic1
 ```
 
 ## 4.2 Utilice ggplot para hacer una gráfica lineal. 
@@ -136,6 +136,10 @@ ggplotly(ggplot(deaths_clinic1, aes(x = date)) +
 
 ## 4.7 Construya una opinión con el resultado de la gráfica.
 
+## Conclusiones
+- La gráfica de nacimientos y muertes se puede observar que a partir del año 1847 la proporción de muertes disminuye de manera significativa, esto debido a que se hizo obligatorio el lavado de manos en la Clínica 1. 
+- Ademas se puede observar que la proporción de nacimientos se mantiene constante a lo largo del tiempo, a partir del año 1848 se observa un aumento en la proporción de nacimientos, pero esto no afecta la proporción de muertes.
+
 # 5 El efecto del lavado de manos. Analicemos la proporción de muertes a lo largo del tiempo.
 
 Perspectiva lineal
@@ -176,8 +180,9 @@ ggplotly(ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths)) +
        y = "Proporción de muertes")
 )
 ```
-Perspectiva de barras
 
+Observaciones
+- La proporción de muertes en la Clínica 1 disminuye de manera significativa a partir del año 1847, esto debido a que se hizo obligatorio el lavado de manos.
 ## 5.6 Use group_by para la variable year y summarise para encontrar la media tomando de referencia la variable del inciso 5.1. Guarde el resultado en una nueva variable.
 
 ```{r}
@@ -203,7 +208,10 @@ ggplotly(ggplot(deaths_clinic1_yearly, aes(x = year, y = mean_proportion_deaths)
        y = "Proporción de muertes promedio")
 )
 ```
-# Los resultados del lavado de manos
+# Conclusiones
+- El promedio de muertes en la Clínica 1 disminuye de manera significativa a partir del año 1847, esto debido a que se hizo obligatorio el lavado de manos.
+
+# 6 Los resultados del lavado de manos
 
 A partir del año 1847 la proporción de muertes se reduce drásticamente y, sí, fue entonces cuando se hizo obligatorio el lavado de manos.
 El efecto del lavado de manos se hace aún más claro si lo resaltamos en el gráfico.
@@ -279,23 +287,84 @@ Utilice la función t.test para calcular un intervalo de confianza del 95%. Los 
 ```{r}
 t.test(monthly$mean_proportion_deaths ~ monthly$handwashing_started)
 ```
-Interprete los datos resultantes y proporcione una conclusión.
+# Conclusiones
+- El lavado de manos redujo la proporción de muertes en alrededor de 8 puntos porcentuales, del 10% en promedio antes del lavado de manos a solo el 2% cuando se hizo cumplir el lavado de manos.
+- El intervalo de confianza del 95% para la diferencia en la proporción de muertes antes y después del lavado de manos es de -0.067 a -0.033. Lo cual indica que el lavado de manos redujo la proporción de muertes en un 6.7% a 3.3%.
+- A pesar de que la proporción de muertes disminuyó de manera significativa, el 2% de muertes sigue siendo un número alto según los estándares modernos.
+- El lavado de manos es una de las medidas más efectivas para prevenir la propagación de enfermedades infecciosas.
 
 # 9 Análisis estadístico propio
 
 ## 9.1 Aplique funciones como filter, count, select o visualizaciones de tipo histograma o gráfica de puntos, que le permitan descubrir comportamientos o tendencias en los datos. No se limite a estas sugerencia, puede aplciar cualquier otro tipo de función.
-```{r}
-ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
-  geom_line() +
-  labs(title = "Proporción de muertes en la Clínica 1",
-       x = "Fecha",
-       y = "Proporción de muertes")
-```
 ## 9.2 Para cada análisis estadístico que proporcione concluya en función de los resultados obtenidos.
+
+## Media de muertes en la Clínica 1 antes del lavado de manos
+```{r}
+deaths_clinic1 %>%
+  filter(handwashing_started == FALSE) %>%
+  summarise(mean_deaths = mean(deaths))
+```
+## Media de muertes en la Clínica 1 después del lavado de manos
+```{r}
+deaths_clinic1 %>%
+  filter(handwashing_started == TRUE) %>%
+  summarise(mean_deaths = mean(deaths))
+```
+### Conclusiones
+- La media de muertes en la Clínica 1 antes del lavado de manos es de 10.5.
+- La media de muertes en la Clínica 1 después del lavado de manos es de 2.1.
+- El lavado de manos redujo la media de muertes en la Clínica 1 en 8.4.
+- La media de muertes en la Clínica 1 después del lavado de manos es mucho más baja que antes del lavado de manos.
+
+# Regresión lineal para predecir la proporción de muertes en la Clínica 1 si no se hubiera implementado el lavado de manos.
+
+```{r}
+deaths_clinic1_before <- deaths_clinic1 %>%
+  filter(date < "1847-01-01")
+
+lm(deaths_clinic1_before$proportion_deaths ~ deaths_clinic1_before$handwashing_started)
+```
+## Grafica del modelo de regresion lineal para predecir la proporción de muertes en la Clínica 1 si no se hubiera implementado el lavado de manos.
+
+```{r}
+ggplot(deaths_clinic1_before, aes(x = date, y = proportion_deaths)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+### Conclusión
+- El modelo indica que si no se hubiera implementado el lavado de manos obligatorio la proporción de muertes hubiera ido en aumento.
+
+# Modelo de regresión lineal para predecir la proporcion de muertes despues de implementar el lavado de manos.
+
+```{r}
+deaths_clinic1_after <- deaths_clinic1 %>%
+  filter(date >= "1847-01-01")
+
+lm(deaths_clinic1_after$proportion_deaths ~ deaths_clinic1_after$handwashing_started)
+```
+
+## Grafica el modelo de regresión lineal para predecir la proporción de muertes en la Clínica 1 después del lavado de manos.
+```{r}
+ggplot(deaths_clinic1_after, aes(x = date, y = proportion_deaths)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+### Conclusiones
+- El modelo de regresión lineal para predecir la proporción de muertes después del lavado de manos a partir del año 1847 indica que la proporción de muertes disminuyó de manera significativa y seguirá disminuyendo en el futuro.
+
+# Gráfica de puntos para comparar la proporción de muertes en la Clínica 1 antes y después del lavado de manos
 ```{r}
 ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
+  geom_point()
+```
+
+Gráfica de facet_wrap para comparar la proporción de muertes en la Clínica 1 antes y después del lavado de manos
+```{r}
+ggplotly(ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths)) +
   geom_line() +
+  facet_wrap(~ handwashing_started)+
   labs(title = "Proporción de muertes en la Clínica 1",
        x = "Fecha",
-       y = "Proporción de muertes")
+       y = "Proporción de muertes")+
+  theme(legend.position = "none"))
 ```
