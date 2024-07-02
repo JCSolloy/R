@@ -5,12 +5,20 @@ name: Juan Carlos Solloy Xicón
 course: Fundamentos de programación y scripting
 date: 08-07-2024
 ---
+# Descripción
+
+La sepáis ocasiona en el mundo más de mil muertes cada día, muchos de estos pacientes adquieren la infección estando hospitalizados y constituye la complicación intrahospitalaria más frecuente. La infección de pacientes por las manos de contaminadas del personal de salud es una de las formas de diseminación de los agentes infecciosos. La higiene de las manos es el factor individual más importante para el control de las infecciones, es difícil entender que un hecho tan rutinario en la práctica de la medicina, como lavarse las manos previo a examinar a un paciente, haya causado tanta controversia en la época de 1800.
+
+A principios de la década de 1840 se descubrió una enfermedad mortal que afectaba a las mujeres que acababan de dar a luz, cerca del 10% de las mujeres morían a causa de esta enfermedad y el origen provenía de las manos contaminadas del personal médico que atendía los partos.
+
+En este proyecto, vamos analizar los datos que demuestran la importancia del lavado de manos, identificando anomalías en los procedimientos médicos.
 
 # 1. Conociendo los datos
 
 ## 1.1 Cargue el paquete tidyverse
 ```{r}
 library(tidyverse)
+install.packages("plotly")
 library(plotly)
 ```
 
@@ -34,9 +42,11 @@ deaths_handwashing <- deaths_handwashing %>%
 
 ## 2.2 Imprima el dataset con lanueva variable.
 ```{r}
-deaths_handwashing
+deaths_handwashing %>%
+  arrange(desc(proportion_deaths))
 ```
-# 3 Muerte en las clínicas Si ahora graficamos la proporción de muertes en la clínica 1 como en la clínica 2, veremos un patrón curioso.
+# 3 Muerte en las clínicas 
+Si ahora graficamos la proporción de muertes en la clínica 1 como en la clínica 2, veremos un patrón curioso.
 
 ## 3.1 Utilice ggplot para hacer una gráfica lineal. Tome de referencia la columna creada en el inciso 2.1 (eje) versus la variable year (eje x).
 ```{r}
@@ -58,6 +68,11 @@ ggplotly(ggplot(deaths_handwashing, aes(x = year, y = proportion_deaths, color =
     )
 ```
 
+## Observaciones
+La proporción de muertes en la Clínica 1 es mucho más alta que en la Clínica 2. 
+A partir del año 1842 la proporción de muertes en ambas clínicas empezó a disminuir de manera significativa.
+En el año 1845 la proporción de muertes tuvo un aumento en ambas clínicas.
+
 # 4 Comienza el lavado de manos
 
 ¿Por qué la proporción de muertes es mucho más alta en la Clínica 1? 
@@ -72,7 +87,9 @@ Entonces, en un intento desesperado por detener las altas tasas de mortalidad, s
 deaths_clinic1 <- read_csv("deaths_clinic_1.csv")
 ```
 
-## 4.2 Utilice ggplot para hacer una gráfica lineal. La gráfica tendrá la característica de ser dual (dos ejes Y). Para el eje X se utilizará la variable date y para Y1 y Y2, serán births y deaths respectivamente.
+## 4.2 Utilice ggplot para hacer una gráfica lineal. 
+La gráfica tendrá la característica de ser dual (dos ejes Y). 
+Para el eje X se utilizará la variable date y para Y1 y Y2, serán births y deaths respectivamente.
 ```{r}
 ggplot(deaths_clinic1, aes(x = date)) +
   geom_line(aes(y = births, color = "Nacimientos")) +
@@ -122,7 +139,8 @@ ggplotly(ggplot(deaths_clinic1, aes(x = date)) +
 # 5 El efecto del lavado de manos. Analicemos la proporción de muertes a lo largo del tiempo.
 
 Perspectiva lineal
-## 5.1 Agregue una nueva columna a la variable creada en el inciso 4.1. Esta nueva columna se calculará como la proporción de muertes por número de nacimientos. Guarde este cambio en una nueva variable.
+## 5.1 Agregue una nueva columna a la variable creada en el inciso 4.1. 
+Esta nueva columna se calculará como la proporción de muertes por número de nacimientos. Guarde este cambio en una nueva variable.
 ```{r}
 deaths_clinic1 <- deaths_clinic1 %>%
   mutate(proportion_deaths = deaths / births)
