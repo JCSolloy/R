@@ -67,7 +67,7 @@ ggplotly(ggplot(deaths_handwashing, aes(x = year, y = proportion_deaths, color =
     )
 ```
 
-## Observaciones
+## Conclusiones
 - La proporción de muertes en la Clínica 1 es mucho más alta que en la Clínica 2, esto debido, como se menciona en la descripción, a que la enfermedad se propagaba por las manos contaminadas del personal médico, y en la clínica 1 había más estudiantes de medicina que en la clínica 2, quienes ademas de atender partos, también pasaban tiempo en las salas de autopsias examinando cadáveres.
 - A partir del año 1842 la proporción de muertes en ambas clínicas empezó a disminuir de manera significativa.
 - En el año 1845 la proporción de muertes tuvo un aumento en ambas clínicas.
@@ -183,6 +183,7 @@ ggplotly(ggplot(deaths_clinic1, aes(x = date, y = proportion_deaths)) +
 
 Observaciones
 - La proporción de muertes en la Clínica 1 disminuye de manera significativa a partir del año 1847, esto debido a que se hizo obligatorio el lavado de manos.
+
 ## 5.6 Use group_by para la variable year y summarise para encontrar la media tomando de referencia la variable del inciso 5.1. Guarde el resultado en una nueva variable.
 
 ```{r}
@@ -278,15 +279,37 @@ ggplot(monthly, aes(x = handwashing_started, y = mean_proportion_deaths)) +
 ggplot(monthly, aes(x = handwashing_started, y = mean_proportion_deaths)) +
   geom_boxplot()
 ```
+## Conclusiones 
+- Como se puede observar en el boxplot, la proporción de muertes disminuyó de manera significativa después de que se impusiera el lavado de manos en la Clínica 1.
+- La proporción de muertes antes del lavado de manos es mucho más alta que después del lavado de manos.
+
 # 8 Análisis estadístico de los datos de lavado de manos
 
-
 ¡Redujo la proporción de muertes en alrededor de 8 puntos porcentuales! Del 10% en promedio antes del lavado de manos a solo el 2% cuando se hizo cumplir el lavado de manos (que sigue siendo un número alto según los estándares modernos). Para tener una idea de la incertidumbre en torno a cuánto se reduce la mortalidad por lavarse las manos, podríamos observar un intervalo de confianza (aquí calculado mediante una prueba t).
+```{r}
+```
+
+
+```{r}
+```
 
 Utilice la función t.test para calcular un intervalo de confianza del 95%. Los dos grupos que tenemos son proporción mensual de muertes antes y después de que comenzara el lavado de manos. Tome de referencia la columna con la proporción (muertes/nacimientos) y la columna creada en el inciso 6.1.
 ```{r}
 t.test(monthly$mean_proportion_deaths ~ monthly$handwashing_started)
 ```
+Resultados de la Prueba t de Welch
+t-value (6.7105): Este es el valor de la estadística t. Un valor alto en magnitud (positivo o negativo) sugiere que hay una diferencia significativa entre las medias de los dos grupos.
+
+df (84.198): Grados de libertad. Este valor se utiliza para determinar la significancia del valor t. En una prueba t de Welch, los grados de libertad no siempre son un número entero.
+
+p-value (2.114e-09): El valor p indica la probabilidad de obtener un resultado tan extremo como el observado, asumiendo que la hipótesis nula es verdadera. En este caso, el valor p es extremadamente bajo (mucho menor que 0.05), lo que indica una fuerte evidencia en contra de la hipótesis nula. Por lo tanto, podemos concluir que hay una diferencia significativa entre los dos grupos.
+
+alternative hypothesis: La hipótesis alternativa es que la verdadera diferencia de medias entre el grupo FALSE y el grupo TRUE no es igual a 0.
+
+95 percent confidence interval (0.05290915, 0.09747238): Este intervalo de confianza para la diferencia de medias indica que, con un 95% de confianza, la verdadera diferencia de medias entre los dos grupos está entre 0.0529 y 0.0975. Dado que este intervalo no incluye 0, refuerza la conclusión de que hay una diferencia significativa entre las medias.
+
+mean in group FALSE (0.10691840) y mean in group TRUE (0.03172764): Estas son las medias de proporción de muertes en cada grupo. El grupo FALSE tiene una media de 0.1069, mientras que el grupo TRUE tiene una media de 0.0317.
+
 # Conclusiones
 - El lavado de manos redujo la proporción de muertes en alrededor de 8 puntos porcentuales, del 10% en promedio antes del lavado de manos a solo el 2% cuando se hizo cumplir el lavado de manos.
 - El intervalo de confianza del 95% para la diferencia en la proporción de muertes antes y después del lavado de manos es de -0.067 a -0.033. Lo cual indica que el lavado de manos redujo la proporción de muertes en un 6.7% a 3.3%.
